@@ -14,6 +14,7 @@ if ($conn->connect_error) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -134,10 +135,29 @@ body{
         .back-button:hover {
             background-color: #bbb;
         }
+    
+
+        * {
+  box-sizing: border-box;
+}
+
+#searchInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+
 </style>
    
 </head>
 <body>
+  
   <!-- Sidebar -->
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -168,26 +188,25 @@ body{
     <!-- Generate button -->
     <!-- <button onclick="generateTable()">Show</button> -->
 <!-- <button onclick="exportToExcel()">Download Excel</button> -->
-
-
-    
-
-
 <h2 style="text-align: center;">CALL - SLIP ENTRIES</h2>
 
+
+
+
+
+
+
+
 <div class="container">
-  <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." style="font-size: 16px; padding: 2px 4px; margin-right: auto; margin-left: 280px; width: 150px;">
-  <!-- <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." style="font-size: 16px; padding: 4px 8px; margin-right: auto; margin-left: 20px; width: 150px;"> -->
+  <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." style="font-size: 16px; padding: 8px 10px; margin-right: auto; margin-left: 200px; width: 250px;">
+  <!-- <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." style="font-size: 16px; padding: 4px 8px; margin-right: auto; margin-left: 20px; width: 150px;">
   
-  <!-- <a href="download.php" onclick="exportToExcel()" style="text-decoration: none;">
+ <a href="download.php" onclick="exportToExcel()" style="text-decoration: none;">
     <button style="font-size: 16px; margin: 10px 20px 10px auto; float: right;">Download</button>
 </a> -->
   <button onclick="location.href='e-form.php';" style="margin-left: 500px; margin-right: auto;">Add Form</button>
 
-
-
-
-
+ 
 
 
   <div class="scrollable-div">
@@ -290,36 +309,35 @@ function closeNav() {
 
 }
 
-  function searchTable() {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.querySelector(".scrollable-table");
-            tr = table.getElementsByTagName("tr");
+function searchTable() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".scrollable-table");
+    tr = table.getElementsByTagName("tr");
 
-            for (i = 0; i < tr.length; i++) {
-                var found = false;
-                td = tr[i].getElementsByTagName("td");
+    for (i = 1; i < tr.length; i++) { // Start from index 1 to skip header row
+        var found = false;
+        td = tr[i].getElementsByTagName("td");
 
-                for (var j = 0; j < td.length; j++) {
-                    var cell = td[j];
-                    if (cell) {
-                        var cellText = cell.textContent || cell.innerText;
-                        if (cellText.toUpperCase().indexOf(filter) > -1) {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (found) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+        for (var j = 0; j < td.length; j++) {
+            var cell = td[j];
+            if (cell) {
+                var cellText = cell.textContent || cell.innerText;
+                if (cellText.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                    break;
                 }
             }
         }
-    </script>
 
+        if (found) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+</script>
 </body>
 </html>

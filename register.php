@@ -12,7 +12,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color:red;
+            background-color:#800000;
         }
         form {
             width: 300px;

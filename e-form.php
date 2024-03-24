@@ -204,7 +204,8 @@ th, td {
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="entry_date">ENTRY DATE:</label>
-                    <input type="date" id="entry_date" name="entry_date" value="<?php echo $row['entry_date']; ?>">
+                    <input type="date" id="entry_date" name="entry_date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>">
+             
                 </div>
                 <div class="form-group">
                     <label for="name">FULL NAME:</label>
@@ -479,6 +480,18 @@ function closeNav() {
     document.getElementById("getLocationBtn").addEventListener("click", function() {
         getCurrentLocation();
     });
+</script>
+<script>
+    // Get today's date
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+    
+    today = yyyy + '-' + mm + '-' + dd;
+    
+    // Set the value of the entry date field to today's date
+    document.getElementById('entry_date').value = today;
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
