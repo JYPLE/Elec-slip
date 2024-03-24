@@ -71,7 +71,7 @@
         if (isset($_SESSION['userdata']) && $_SESSION['userdata']['user_role'] == "agent") {
             echo '<label for="agent">Agent:</label>';
             echo '<input type="text" id="agent" name="agent" value="' . $_SESSION['userdata']['username'] . '" readonly><br>';
-        }
+        } 
         ?>
         <input type="submit" value="login">
     </form>
