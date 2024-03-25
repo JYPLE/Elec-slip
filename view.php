@@ -45,7 +45,7 @@ if ($result && $result->num_rows > 0) {
     echo "<tr><td>Nap:</td><td>" . $row["nap"] . "</td></tr>";
     echo "<tr><td>Longitude:</td><td>" . $row["longitude"] . "</td></tr>";
     echo "<tr><td>Latitude:</td><td>" . $row["latitude"] . "</td></tr>";
-    echo "<tr><td>Price:</td><td>" . $row["price"] . "</td></tr>";
+  
 
     echo "<tr><td>EXISTING PLDT:</td><td>" . $row["pldt_existing"] . "</td></tr>";
     echo "<tr><td>EXISTING PLDT SALES NEW:</td><td>" . $row["pldt_sales_new"] . "</td></tr>";
@@ -63,6 +63,7 @@ if ($result && $result->num_rows > 0) {
     echo "<tr><td>UNENGAGED SALES NEW:</td><td>" . $row["unengaged_sales_new"] . "</td></tr>";
     echo "<tr><td>UNENGAGED SALES SWITCH:</td><td>" . $row["unengaged_sales_switch"] . "</td></tr>";
     echo "<tr><td>OTHER PROVIDER:</td><td>" . $row["other_prov"] . "</td></tr>";
+    echo "<tr><td>Price:</td><td>" . $row["price"] . "</td></tr>";
     echo "<tr><td>Satisfied:</td><td>" . $row["satisfied"] . "</td></tr>";
     echo "<tr><td>Locked_in:</td><td>" . $row["locked_in"] . "</td></tr>";
     echo "<tr><td>Others_not_signing_up:</td><td>" . $row["others_not_signing_up"] . "</td></tr>";

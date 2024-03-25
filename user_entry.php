@@ -28,7 +28,7 @@ if ($conn->connect_error) {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: green;
+  background-color: #a8e4a0;
   overflow-x: hidden;
   transition: 0.1s;
   padding-top: 10px;
@@ -37,8 +37,8 @@ if ($conn->connect_error) {
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
-  color: white;
+  font-size: 20px;
+  color: #800000;
   display: block;
   transition: 0.1s;
 }
@@ -73,21 +73,22 @@ if ($conn->connect_error) {
             border-collapse: collapse;
             width: auto; /* Set to auto for horizontal scrolling */
             min-width: 500px; /* Ensure the table is wide enough to demonstrate horizontal scrolling */
-            background-color: green;
+            background-color: white;
         }
 
         .scrollable-table, th, td {
             border: 1px solid #ddd;
         }
 
-        th, td, h2 {
+         td {
             padding: 1px;
             text-align: center;
+            color: black;
+        }
+        th, h2{
+          padding: 1px;
+            text-align: center;
             color: white;
-
-           
-            
-
         }
 
         thead th {
@@ -299,8 +300,8 @@ body{
 
 <script>
 function openNav() {
-  document.getElementById("mySidenav").style.width = "150px";
-  document.getElementsByClassName("container")[0].style.marginLeft = "150px";
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementsByClassName("container")[0].style.marginLeft = "250px";
 }
 
 function closeNav() {

@@ -38,7 +38,8 @@ function getAgentName($user_id) {
 <!DOCTYPE html>
 <html>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <head>
     <title>Call Slip Entries Form with Side Nav</title>
     <style>
@@ -56,7 +57,7 @@ function getAgentName($user_id) {
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: #111;
+            background-color: #a8e4a0;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
@@ -65,14 +66,14 @@ function getAgentName($user_id) {
         .sidenav a {
             padding: 8px 8px 8px 32px;
             text-decoration: none;
-            font-size: 25px;
-            color: #818181;
+            font-size: 20px;
+            color: #800000;
             display: block;
             transition: 0.3s;
         }
 
         .sidenav a:hover {
-            color: #f1f1f1;
+            color: black;
         }
 
         .sidenav .closebtn {
@@ -87,6 +88,13 @@ function getAgentName($user_id) {
             bottom: 20px;
             left: 20px;
         }
+        /* Style for logout link */
+.sidenav .logout {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+}
+
 
         #main {
             transition: margin-left .5s;
@@ -113,23 +121,26 @@ function getAgentName($user_id) {
         border-radius: .2rem;
     }
 
-label, input[type="text"], input[type="date"], select, input[type="number"], input[type="submit"] {
+label, input[type="text"], input[type="date"], select, input[type="number"], input[type="submit"]  {
     display: block;
     margin: 10px 0;
     width: 100%; /* Full width */
 }
 
 input[type="submit"] {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     background-color: #4CAF50;
-    color: white;
+    color: black;
     border: none;
     cursor: pointer;
+    
 }
 
 input[type="submit"]:hover {
     background-color: #45a049;
+    color: black;
+    
 }
 
 /* Additional styles */
@@ -142,7 +153,7 @@ select, input[type="text"], input[type="date"], input[type="number"] {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: white;
     background-color: green;
 }
@@ -178,12 +189,12 @@ th, td {
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <!-- <a href="user_table.php">Agent</a>
     <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a> -->
+    <a href="#">Clients</a>-->
+    <a href="user_entry.php">Table</a> 
     <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </div>
 <div id="main">
-    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    <span style="color: white; font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
 <h2>CALL - SLIP ENTRIES</h2>
 
 <form action="submit_form.php" method="post">
@@ -234,13 +245,15 @@ th, td {
                     <input type="text" id="lcp" name="lcp"oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <div class="form-group">
-                    <label for="contact_number">CONTACT NUMBER:</label>
-                    <input type="number" id="contact_number" name="contact_number">
-                </div>
-                <div class="form-group">
                     <label for="nap">NAP:</label>
                     <input type="text" id="nap" name="nap"oninput="this.value = this.value.toUpperCase()">
                 </div>
+
+                <div class="form-group">
+                    <label for="contact_number">CONTACT NUMBER:</label>
+                    <input type="number" id="contact_number" name="contact_number">
+                </div>
+               
                 <div class="form-group">
                     <button type="button" id="getLocationBtn" class="btn btn-success">Get Current Location</button>
                 </div>
@@ -253,20 +266,8 @@ th, td {
                     <input type="number" id="latitude" name="latitude" step="any">
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
-            <label for="price">PRICE:</label>
-            <input type="text" id="price" name="price"oninput="this.value = this.value.toUpperCase()">
-            <label for="satisfied">SATISFIED:</label>
-            <input type="text" id="satisfied" name="satisfied"oninput="this.value = this.value.toUpperCase()">
-            <label for="locked_in">LOCKED-IN:</label>
-            <input type="text" id="locked_in" name="locked_in"oninput="this.value = this.value.toUpperCase()">
-            <label for="others_not_signing_up">OTHERS:</label>
-            <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
-        </div>
-    
-    <table>
+            <br>
+            <table>
         <tr>
             <th></th>
             <th>EXISTING</th>
@@ -411,18 +412,49 @@ th, td {
                 </select>
             </td>
             
-<!-- <center>
-           <tr>
+      
+        </tr>
            <td>OTHER PROVIDERS</td>
             <td>
-            <input type="text" name="globe_additional_info" placeholder="EXAMPLE P2P">
-        </td>
-    </tr></center> -->
-    
-        </tr>
-    </table>
-    <label for="other provider">OTHER PROVIDER</label>
+            <label for="other provider">OTHER PROVIDER</label>
     <input type="text" id="other_prov" name="other_prov"><br>
+ 
+    </tr>
+    </table>
+    
+        </div>
+    
+        <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+               
+            <input type="checkbox" id="price" name="price" value="PRICE"> 
+            <label for="price">PRICE:</label>
+                </div>
+        </div>
+                <div class="col-md-4">
+                <div class="form-group">
+              
+            <input type="checkbox" id="satisfied" name="satisfied" value="SATISFIED"> 
+             <label for="satisfied">SATISFIED:</label>
+                </div>
+        </div>
+        <div class="col-md-4">
+                <div class="form-group">
+            
+            <input type="checkbox" id="locked_in" name= "locked_in" value="LOCKED_IN"> 
+            <label for="locked_in">LOCKED-IN:</label>
+                </div>
+        </div>
+  
+            <label for="others_not_signing_up">OTHERS:</label>
+            <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
+          
+    
+  
+    <!-- <label for="other provider">OTHER PROVIDER</label>
+    <input type="text" id="other_prov" name="other_prov"><br>  -->
     <input type="submit" value="Submit">
 </form>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

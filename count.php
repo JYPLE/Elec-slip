@@ -122,54 +122,79 @@ $sql = "SELECT
             agent, barangay,
             COUNT(*) AS entry_count,
             SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
-            SUM(CASE WHEN pldt_existing = 'No' THEN 0 ELSE 0 END) AS pldt_no_count,
+            SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
             SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
-            SUM(CASE WHEN globe_existing = 'No' THEN 0 ELSE 0 END) AS globe_no_count,
+            SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
             SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
-            SUM(CASE WHEN converge_existing = 'No' THEN 0 ELSE 0 END) AS converge_no_count
+            SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
+            SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
+            SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
+            SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
+            SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count
         FROM slip_entry 
         WHERE entry_date BETWEEN '$date_from' AND '$date_to'
         GROUP BY agent";
+
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
     
     echo "<table class='scrollable-table'>";
-    echo "<thead><tr>
-    <th>Agent</th>
-    <th>Entry Count</th>
-    <th>PLDT Existing Yes </th>
-    <th>PLDT Existing No </th>
-    <th>Globe Existing Yes </th>
-    <th>Globe Existing No </th>
-    <th>Converge Existing Yes </th>
-    <th>Converge Existing No </th>
-    </tr></thead>";
+    echo "<thead><tr>";
+        
+    // Header for "Agent"
+    echo "<th rowspan='2'>Agent</th>";
+    // Header for "Count"
+    echo "<th rowspan='2'>Count</th>";
+    
+    // Remaining headers
+    echo "<th colspan='2'>PLDT Existing</th>";
+    echo "<th colspan='2'>Globe Existing</th>";
+    echo "<th colspan='2'>Converge Existing</th>";
+    echo "<th colspan='2'>No Providers Existing</th>";
+    echo "<th colspan='2'>Unengaged Existing</th>";
+    echo "</tr>";
+        
+    // Second row of headers
+    echo "<tr>";
+    echo "<th>Yes</th>";
+    echo "<th>No</th>";
+    echo "<th>Yes</th>";
+    echo "<th>No</th>";
+    echo "<th>Yes</th>";
+    echo "<th>No</th>";
+    echo "<th>Yes</th>";
+    echo "<th>No</th>";
+    echo "<th>Yes</th>";
+    echo "<th>No</th>";
+    echo "</tr></thead>";
+        
     echo "<tbody>";
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
-        // echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
-        
+        // Display "agent" column
         echo "<td><a href='count_table.php?barangay=" . urlencode($row['barangay']) . "'>" . htmlspecialchars($row["agent"]) . "</a></td>";
+        // Display "count" column
         echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
+        // Display the rest of the columns
         echo "<td>" . htmlspecialchars($row["pldt_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["pldt_no_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["globe_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["globe_no_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["converge_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["converge_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["no_providers_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["no_providers_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["unengaged_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["unengaged_no_count"]) . "</td>";
         echo "</tr>";
     }
     echo "</tbody>";
     echo "</table>";
-} else {
-    echo "No entries found";
 }
-
+// Closing braces for PHP code
 $conn->close();
 ?>
-
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

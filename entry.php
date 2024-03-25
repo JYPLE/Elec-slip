@@ -16,7 +16,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: green;
+  background-color: #a8e4a0;
   overflow-x: hidden;
   transition: 0.1s;
   padding-top: 20px;
@@ -25,14 +25,14 @@
 .sidenav a {
   padding: 4px 4px 4px 16px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   color: white;
   display: block;
   transition: 0.1s;
 }
 
 .sidenav a:hover {
-  color: white ;
+  color: black ;
 }
 
 .sidenav .closebtn {
@@ -48,6 +48,19 @@
 .sidenav .logout {
   position: absolute;
   bottom: 20px;
+  left: 20px;
+}
+
+/* Style for logout link */
+.sidenav .agent {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+/* Style for logout link */
+.sidenav .agentEntry {
+  position: absolute;
+  top: 50px;
   left: 20px;
 }
 
@@ -68,17 +81,21 @@
 
         .scrollable-table, th, td {
             border: 1px solid #ddd;
-            background-color: green;
+            background-color: white;
         }
 
-        th, td, h2 {
+        th, h2{
             padding: 1px;
             text-align: center;
             color: white;
             
 
         }
-
+td {
+            padding: 1px;
+            text-align: center;
+            color: black;
+}
         thead th {
             position: sticky;
             top: 0;
@@ -110,8 +127,8 @@ body{
   <!-- Sidebar -->
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="user_table.php">Agent</a>
- <a href="count.php">Agent Entry</a>
+  <a href="user_table.php" class="agent"><i class="fas fa-user-alt"></i>Agent</a>
+ <a href="count.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Agent Entry</a>
   <!-- <a href="#">Clients</a>
   <a href="#">Contact</a> -->
   <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -370,8 +387,8 @@ $conn->close();
 
 // nav
 function openNav() {
-  document.getElementById("mySidenav").style.width = "150px";
-  document.getElementsByClassName("container")[0].style.marginLeft = "150px";
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementsByClassName("container")[0].style.marginLeft = "250px";
 }
 
 function closeNav() {
