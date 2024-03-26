@@ -68,10 +68,10 @@ if ($result && $result->num_rows > 0) {
         </style>
     </head>
     <body>
-      <center>  <h1>DETIALS OF: <?php echo $row["name"]; ?></h1></center>
+      <!-- <center>  <h1>DETAILS OF: <?php echo $row["name"]; ?></h1></center> -->
         <div class="entry-details">
             <table>
-                <tr><th>Field</th><th>Value</th></tr>
+                <tr><th>Field</th><th>Info</th></tr>
                 <tr><td>Entry Number:</td><td><?php echo $row["id"]; ?></td></tr>
                 <tr><td>Entry Date:</td><td><input type="date" value="<?php echo $row["entry_date"]; ?>" disabled></td></tr>
                 <tr><td>Name:</td><td><input type="text" value="<?php echo $row["name"]; ?>" disabled></td></tr>

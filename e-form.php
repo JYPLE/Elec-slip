@@ -417,16 +417,16 @@ th, td {
                      <option value="Yes">Yes</option>
                 </select>
             </td>
-            
+             </tr>
       
-            </tr>
+           <tr>
 
-    <th rowspan="1">OTHER PROVIDERS</th>
-    <td>
-        <label for="other_provider">OTHER PROVIDER</label>
-        <input type="text" id="other_prov" name="other_prov"><br>
-    </td>
-</tr>
+            <th rowspan="2">OTHER PROVIDERS</th>
+        <td>
+            <label for="other_provider">OTHER PROVIDER</label>
+            <input type="text" id="other_prov" name="other_prov"><br>
+        </td> 
+        </tr>
     </table>
     
         </div>

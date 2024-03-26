@@ -69,8 +69,8 @@
 
         .scrollable-table {
             border-collapse: collapse;
-            width: auto; /* Set to auto for horizontal scrolling */
-            min-width: 500px; /* Ensure the table is wide enough to demonstrate horizontal scrolling */
+           width: auto; /*Set to auto for horizontal scrolling */
+            min-width: 100px;  /* Ensure the table is wide enough to demonstrate horizontal scrolling */
             background-color: white;
         }
 
@@ -102,16 +102,7 @@
             background-color: green;
             z-index: 1;
         }
-        /* table {
-    width: 50%;
-    border-collapse: collapse;
-    margin-bottom: 40px;
-    margin-left: auto;
-    margin-right: 10px;
-   
-    
-} */
-
+      
 .edit-button {
             padding: 5px 10px;
             border: none;
@@ -197,12 +188,12 @@ if ($conn->connect_error) {
         <thead>
             <tr>
            <th>Entry Number</th>
-           <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Entry Date</th>
-    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Full Name</th>
-    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Contact Number</th>
-  <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Zone</th>
-    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Barangay</th>
-    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>ACTION</th>
+           <th >Entry Date</th>
+    <th >Full Name</th>
+    <th>Contact Number</th>
+  <th >Zone</th>
+    <th>Barangay</th>
+    <th>ACTION</th>
 
             </tr>
         </thead>

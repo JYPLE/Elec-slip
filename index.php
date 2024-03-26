@@ -61,7 +61,7 @@
 <body>
   
     <form action="login.php" method="post">
-        <h2>Call-Slip Login AS: </h2>
+        <h2>Call-Slip Login </h2>
         <label for="username">New Username:</label>
         <input type="text" id="username" name="username" required><br><br>
         

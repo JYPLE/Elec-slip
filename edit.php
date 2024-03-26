@@ -189,34 +189,35 @@ th, td {
     $conn->close();
     ?>
 
-    <form method="POST" action="">
+<form method="POST" action="">
     <div class="container">
         <!-- Display the form with input fields pre-filled with entry details -->
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" value="<?php echo $row['name']; ?>">
+        <input type="text" name="name" id="name" value="<?php echo $row['name']; ?>" oninput="this.value = this.value.toUpperCase()">
         
         <label for="zone">Zone:</label>
-        <input type="text" name="zone" id="zone" value="<?php echo $row['zone']; ?>">
+        <input type="text" name="zone" id="zone" value="<?php echo $row['zone']; ?>" oninput="this.value = this.value.toUpperCase()">
         
         <label for="barangay">Barangay:</label>
-        <input type="text" name="barangay" id="barangay" value="<?php echo $row['barangay']; ?>">
+        <input type="text" name="barangay" id="barangay" value="<?php echo $row['barangay']; ?>" oninput="this.value = this.value.toUpperCase()">
 
         <label for="entry_date">ENTRY DATE:</label>
-                    <input type="date" id="entry_date" name="entry_date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>">
+        <input type="date" id="entry_date" name="entry_date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>">
+        
         <label for="city">City:</label>
-        <input type="text" name="city" id="city" value="<?php echo $row['city']; ?>">
+        <input type="text" name="city" id="city" value="<?php echo $row['city']; ?>" oninput="this.value = this.value.toUpperCase()">
         
         <label for="province">Province:</label>
-        <input type="text" name="province" id="province" value="<?php echo $row['province']; ?>">
+        <input type="text" name="province" id="province" value="<?php echo $row['province']; ?>" oninput="this.value = this.value.toUpperCase()">
 
         <label for="lcp">Lcp:</label>
-        <input type="text" name="lcp" id="lcp" value="<?php echo $row['lcp']; ?>">
+        <input type="text" name="lcp" id="lcp" value="<?php echo $row['lcp']; ?>" oninput="this.value = this.value.toUpperCase()">
 
         <label for="contact_number">Contact Number:</label>
         <input type="text" name="contact_number" id="contact_number" value="<?php echo $row['contact_number']; ?>">
-
+        
         <label for="nap">Nap:</label>
-        <input type="text" name="nap" id="nap" value="<?php echo $row['nap']; ?>">
+        <input type="text" name="nap" id="nap" value="<?php echo $row['nap']; ?>" oninput="this.value = this.value.toUpperCase()">
        
         <br>
             <table>
@@ -379,7 +380,9 @@ th, td {
     
         </tr>
     </table>
-    <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
+    </div>
+
+      <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -410,9 +413,6 @@ th, td {
     <input type="text" name="other_prov" id="other_prov" value="<?php echo $row['other_prov']; ?>"><br>
     <input type="submit" value="Submit">
 </form>
-        
-        <!-- Add input fields for other entry details -->
-        <!-- <input type="submit" value="Submit">
-    </form> -->
+
 </body>
 </html>

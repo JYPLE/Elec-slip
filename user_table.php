@@ -1,21 +1,67 @@
+<?php
+                    session_start();
+                    $conn = new mysqli("localhost", "root", "", "eslip");
+                    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CALL - SLIP ENTRIES</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Include Font Awesome CSS -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixed Side Nav and Top Navbar with Search</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    /* Adjusting padding to make space for fixed top navbar */
+    body {
+        padding-top: 70px;
+        background-color: #800000;
+    }
 
-        .container {
-            text-align: center;
-            margin-top: 20px;
-        }
+    /* Fixed top navbar */
+    .navbar-fixed-top {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1030;
+    }
 
-        .scrollable-div {
+    /* Fixed side navbar */
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1031;
+        top: 56px; /* Height of top navbar */
+        left: 0;
+        background-color: green;
+        padding-top: 20px;
+    }
+
+    /* Style for links in the side navbar */
+    .sidenav a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+    }
+
+    /* Style for active link in the side navbar */
+    .sidenav a.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    /* Add padding to the main content area to prevent content from being hidden under the fixed side navbar */
+    .main-content {
+        margin-left: 250px; /* Width of the side navbar */
+        padding: 20px;
+    }
+    .scrollable-div {
     overflow-x: auto;
     overflow-y: auto;
     width: 100%;
@@ -85,20 +131,42 @@
         body{
             background-color: #800000;
         }
-    </style>
+</style>
 </head>
 <body>
 
-<div class="container">
-    <h2>User</h2>
-   <!-- Your search input and buttons can be added here if needed -->
-   <a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: right; margin-right: 200px;">
-    <i class="fas fa-arrow-alt-circle-left"></i>back
-</a>
-<!-- Add button -->
-<button class="add-button" onclick="window.location.href='register.php'" style="float: left; margin-left: 110px;">Add New Entry</button>
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+    <a class="navbar-brand" href="#">CALL SLIP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">ADD FORM <i class="fas fa-plus"></i></a>
+            </li> -->
+         
+        </ul>
+        <!-- Search Form -->
+        <form class="form-inline my-2 my-lg-0">
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." >
+            <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button> -->
+        </form>
+    </div>
+</nav>
 
-    <div class="scrollable-div">
+<!-- Side Navbar -->
+<div class="sidenav">
+<a href="entry.php" class="agent"><i class="fas fa-arrow-alt-circle-left"></i>Back</a>
+ <a href="register.php" class="agentEntry"><i class="fas fa-user-alt"></i>Add User</a>
+ <!-- <a href="download.php" class="agentEntry"><i class="fas fa-file-excel"></i>Export Excel</a> -->
+
+ <!-- <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a> -->
+</div>
+<div class="scrollable-div">
         <table class="scrollable-table" data-fixed-columns="true" data-fixed-number="2">
             <thead>
                 <tr>
@@ -111,8 +179,7 @@
             </thead>
             <tbody>
                 <?php
-                    session_start();
-                    $conn = new mysqli("localhost", "root", "", "eslip");
+                   
 
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
@@ -142,5 +209,39 @@
         </table>
     </div>
 
+    <script>
+  function searchTable() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".scrollable-table");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) { // Start from index 1 to skip header row
+        var found = false;
+        td = tr[i].getElementsByTagName("td");
+
+        for (var j = 0; j < td.length; j++) {
+            var cell = td[j];
+            if (cell) {
+                var cellText = cell.textContent || cell.innerText;
+                if (cellText.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (found) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

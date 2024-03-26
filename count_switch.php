@@ -131,19 +131,17 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 $sql = "SELECT 
             agent, barangay,
             COUNT(*) AS entry_count,
-            SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
-            SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
-            SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
-            SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
-            SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
-            SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
-            SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
-            SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
-            SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
-            SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count,
-            SUM(CASE WHEN satisfied = 'Yes' THEN 1 ELSE 0 END) AS satisfied_count,
-            SUM(CASE WHEN locked_in = 'Yes' THEN 1 ELSE 0 END) AS lock_in_count,
-            SUM(CASE WHEN price = 'Yes' THEN 1 ELSE 0 END) AS price_count
+            SUM(CASE WHEN pldt_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS pldt_sales_switch_yes_count,
+            SUM(CASE WHEN pldt_sales_switch = 'No' THEN 1 ELSE 0 END) AS pldt_sales_switch_no_count,
+            SUM(CASE WHEN globe_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS globe_sales_switch_yes_count,
+            SUM(CASE WHEN globe_sales_switch = 'No' THEN 1 ELSE 0 END) AS globe_sales_switch_no_count,
+            SUM(CASE WHEN converge_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS converge_sales_switch_yes_count,
+            SUM(CASE WHEN converge_sales_switch = 'No' THEN 1 ELSE 0 END) AS converge_sales_switch_no_count,
+            SUM(CASE WHEN no_providers_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS no_providers_sales_switch_yes_count,
+            SUM(CASE WHEN no_providers_sales_switch = 'No' THEN 1 ELSE 0 END) AS no_providers_sales_switch_no_count,
+            SUM(CASE WHEN unengaged_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS unengaged_sales_switch_yes_count,
+            SUM(CASE WHEN unengaged_sales_switch = 'No' THEN 1 ELSE 0 END) AS unengaged_sales_switch_no_count
+           
         FROM slip_entry 
         WHERE entry_date BETWEEN '$date_from' AND '$date_to'
         GROUP BY agent";
@@ -159,23 +157,22 @@ if ($result && $result->num_rows > 0) {
     echo "<th rowspan='2'>Agent</th>";
     
     // Header for "Count"
-    echo "<th rowspan='2'>Entry Count</th>";
+  
     
     // Header for "Price"
-    echo "<th rowspan='2'>Price</th>";
+    
     
     // Header for "SATISFIED"
-    echo "<th rowspan='2'>SATISFIED</th>";
-    
+   
     // Header for "LOCK IN"
-    echo "<th rowspan='2'>LOCK IN</th>";
+   
     
     // Remaining headers
-    echo "<th colspan='2'>PLDT Existing</th>";
-    echo "<th colspan='2'>Globe Existing</th>";
-    echo "<th colspan='2'>Converge Existing</th>";
-    echo "<th colspan='2'>No Providers Existing</th>";
-    echo "<th colspan='2'>Unengaged Existing</th>";
+    echo "<th colspan='2'>PLDT Sales switch</th>";
+    echo "<th colspan='2'>Globe Sales switch</th>";
+    echo "<th colspan='2'>Converge Sales switch</th>";
+    echo "<th colspan='2'>No Providers Sales switch</th>";
+    echo "<th colspan='2'>Unengaged Sales switch</th>";
     echo "</tr>";
         
     // Second row of headers
@@ -198,24 +195,18 @@ if ($result && $result->num_rows > 0) {
         // Display "agent" column
         echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
         // Display "count" column
-        echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
-        // Display "Price" column
-        echo "<td>" . htmlspecialchars($row["price_count"]) . "</td>";
-        // Display "SATISFIED" column
-        echo "<td>" . htmlspecialchars($row["satisfied_count"]) . "</td>";
-        // Display "LOCK IN" column
-        echo "<td>" . htmlspecialchars($row["lock_in_count"]) . "</td>";
+       
         // Display the rest of the columns
-        echo "<td>" . htmlspecialchars($row["pldt_yes_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["pldt_no_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["globe_yes_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["globe_no_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["converge_yes_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["converge_no_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["no_providers_yes_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["no_providers_no_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["unengaged_yes_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["unengaged_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["pldt_sales_switch_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["pldt_sales_switch_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["globe_sales_switch_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["globe_sales_switch_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["converge_sales_switch_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["converge_sales_switch_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["no_providers_sales_switch_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["no_providers_sales_switch_no_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["unengaged_sales_switch_yes_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["unengaged_sales_switch_no_count"]) . "</td>";
         echo "</tr>";
     }
     echo "</tbody>";
