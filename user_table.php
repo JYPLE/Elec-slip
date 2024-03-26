@@ -28,19 +28,26 @@
             border-collapse: collapse;
             width: auto; /* Set to auto for horizontal scrolling */
             min-width: 600px; /* Ensure the table is wide enough to demonstrate horizontal scrolling */
-            background-color: green
+            background-color: white;
         }
 
         .scrollable-table, th, td {
             border: 1px solid #ddd;
         }
 
-        th, td, h2 {
+        th, h2 {
             padding: 8px;
             text-align: center;
             color: white;
+            color:white;
         }
 
+        td {
+            padding: 8px;
+            text-align: center;
+            color: white;
+            color:black;
+        }
         thead th {
             position: sticky;
             top: 0;
@@ -51,7 +58,7 @@
         thead th:nth-child(-n+2) {
             position: sticky;
             left: 0;
-            background-color: green;
+            background-color: ;
             z-index: 1;
         }
       
@@ -85,7 +92,9 @@
 <div class="container">
     <h2>User</h2>
    <!-- Your search input and buttons can be added here if needed -->
-<a href="entry.php" class="back-button" onclick="history.back()" style="background-color: white; float: right; margin-right: 110px;">Back</a>
+   <a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: right; margin-right: 200px;">
+    <i class="fas fa-arrow-alt-circle-left"></i>back
+</a>
 <!-- Add button -->
 <button class="add-button" onclick="window.location.href='register.php'" style="float: left; margin-left: 110px;">Add New Entry</button>
 

@@ -121,11 +121,13 @@ function getAgentName($user_id) {
         border-radius: .2rem;
     }
 
-label, input[type="text"], input[type="date"], select, input[type="number"], input[type="submit"]  {
+label, input[type="text"], input[type="date"], select, input[type="number"] {
     display: block;
     margin: 10px 0;
     width: 100%; /* Full width */
 }
+
+
 
 input[type="submit"] {
     width: 50%;
@@ -134,8 +136,12 @@ input[type="submit"] {
     color: black;
     border: none;
     cursor: pointer;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Center horizontally */
 }
+
 
 input[type="submit"]:hover {
     background-color: #45a049;
@@ -413,13 +419,14 @@ th, td {
             </td>
             
       
-        </tr>
-           <td>OTHER PROVIDERS</td>
-            <td>
-            <label for="other provider">OTHER PROVIDER</label>
-    <input type="text" id="other_prov" name="other_prov"><br>
- 
-    </tr>
+            </tr>
+
+    <th rowspan="1">OTHER PROVIDERS</th>
+    <td>
+        <label for="other_provider">OTHER PROVIDER</label>
+        <input type="text" id="other_prov" name="other_prov"><br>
+    </td>
+</tr>
     </table>
     
         </div>
@@ -455,7 +462,7 @@ th, td {
   
     <!-- <label for="other provider">OTHER PROVIDER</label>
     <input type="text" id="other_prov" name="other_prov"><br>  -->
-    <input type="submit" value="Submit">
+   <input type="submit" value="Submit">
 </form>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

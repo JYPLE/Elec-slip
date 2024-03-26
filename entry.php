@@ -3,79 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixed Side Nav and Top Navbar with Search</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<title>Admin Monitoring</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <style>
-/* Sidebar styles */
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #a8e4a0;
-  overflow-x: hidden;
-  transition: 0.1s;
-  padding-top: 20px;
-}
+    /* Adjusting padding to make space for fixed top navbar */
+    body {
+        padding-top: 70px;
+        background-color: #800000;
+    }
 
-.sidenav a {
-  padding: 4px 4px 4px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: white;
-  display: block;
-  transition: 0.1s;
-}
+    /* Fixed top navbar */
+    .navbar-fixed-top {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1030;
+    }
 
-.sidenav a:hover {
-  color: black ;
-}
+    /* Fixed side navbar */
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1031;
+        top: 56px; /* Height of top navbar */
+        left: 0;
+        background-color: green;
+        padding-top: 20px;
+    }
 
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 4px;
-  font-size: 36px;
-  margin-left: 10px;
-  color: white;
-}
+    /* Style for links in the side navbar */
+    .sidenav a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+    }
 
-/* Style for logout link */
-.sidenav .logout {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-}
+    /* Style for active link in the side navbar */
+    .sidenav a.active {
+        background-color: #007bff;
+        color: #fff;
+    }
 
-/* Style for logout link */
-.sidenav .agent {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-/* Style for logout link */
-.sidenav .agentEntry {
-  position: absolute;
-  top: 50px;
-  left: 20px;
-}
-
-        .scrollable-div {
+    /* Add padding to the main content area to prevent content from being hidden under the fixed side navbar */
+    .main-content {
+        margin-left: 250px; /* Width of the side navbar */
+        padding: 20px;
+    }
+    .scrollable-div {
             overflow-x: auto;
             overflow-y: auto;
-            width: 100%; /* Adjust based on your layout needs */
-            height: 300px; /* Set a height to enable vertical scrolling */
+            width: 85%; /* Adjust based on your layout needs */
+            height: 500px; /* Set a height to enable vertical scrolling */
+            margin-left: auto;
+    /* margin-right: auto; */
             
         }
 
         .scrollable-table {
             border-collapse: collapse;
             width: auto; /* Set to auto for horizontal scrolling */
-            min-width: 1000px; /* Ensure the table is wide enough to demonstrate horizontal scrolling */
+            min-width: 100px; /* Ensure the table is wide enough to demonstrate horizontal scrolling */
             
         }
 
@@ -95,6 +90,7 @@ td {
             padding: 1px;
             text-align: center;
             color: black;
+           
 }
         thead th {
             position: sticky;
@@ -109,70 +105,54 @@ td {
             background-color: green;
             z-index: 1;
         }
-        table {
-    width: 100%;
+        .sidenav .logout {
+  position: absolute;
+  bottom: 50px;
+  left: 5px;
+}
+        /* table {
+    width: 50%;
     border-collapse: collapse;
     margin-bottom: 40px;
     margin-left: auto;
     margin-right: auto;
     background-color: green;
-}
-body{
-  background-color:#800000;
-}
+} */
 </style>
-   
 </head>
 <body>
-  <!-- Sidebar -->
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="user_table.php" class="agent"><i class="fas fa-user-alt"></i>Agent</a>
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+    <a class="navbar-brand" href="#">CALL SLIP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">ADD FORM <i class="fas fa-plus"></i></a>
+            </li> -->
+         
+        </ul>
+        <!-- Search Form -->
+        <form class="form-inline my-2 my-lg-0">
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." >
+            <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button> -->
+        </form>
+    </div>
+</nav>
+
+<!-- Side Navbar -->
+<div class="sidenav">
+<a href="user_table.php" class="agent"><i class="fas fa-user-alt"></i>Agent</a>
  <a href="count.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Agent Entry</a>
-  <!-- <a href="#">Clients</a>
-  <a href="#">Contact</a> -->
-  <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+ <a href="download.php" class="agentEntry"><i class="fas fa-file-export"></i>Export Excel</a>
+
+ <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </div>
-
-<!-- Container for sidebar and table -->
-<div class="container">
-    <!-- Sidebar toggle button -->
-    <span style="color:white;font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-    
-     <!-- Search bar -->
-     <!-- <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for names..." style="font-size: 16px; padding: 8px;"> -->
-     <!-- <div style="text-align: center;">
-        <label for="entry_date">From:</label>
-        <input type="date" id="entry_date" name="entry_date">
-        <label for="entry_date">To:</label>
-        <input type="date" id="entry_date" name="entry_date">
-        <button onclick="filterTable()">Apply Filter</button>
-    </div> -->
-
-    
-    
-    <!-- Generate button -->
-    <!-- <button onclick="generateTable()">Show</button> -->
-<!-- <button onclick="exportToExcel()">Download Excel</button> -->
-
-
-    
-
-
-<h2 style="text-align: center;">CALL - SLIP ENTRIES</h2>
-<div class="container">
-  <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." style="font-size: 16px; padding: 4px 8px; margin-right: auto; margin-left: 20px; width: 150px;">
-  
-  <a href="download.php" onclick="exportToExcel()" style="text-decoration: none;">
-    <button style="font-size: 16px; margin: 10px 20px 10px auto; float: right;">Download</button>
-</a>
-</div>
-
-
-
-
-
-
 
 <div class="scrollable-div">
  <table class="scrollable-table" >
@@ -190,30 +170,7 @@ body{
    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Contact Number</th>
    <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>NAP</th> -->
    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>AGENT</th>
-    <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LATITUDE</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LONGITUDE</th>
-   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT SALES NEW</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT SALES SWITCH</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING GLOBE</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING GLOBE SALES NEW</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING GLOBE SALES SWITCH</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING CONVERGE</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING CONVERGE SALES NEW</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING CONVERGE SALES SWITCH</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> NO PROVIDERS</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  PROVIDERS SALES NEW</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  PROVIDERS SALES SWITCH</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>UNENGAGED</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  UNENGAGED SALES NEW</th>
-    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  UNENGAGED SALES SWITCH</th>
-  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>OTHER PROVIDER</th>
- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> PRICE</th>
- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>SATISFIED</th>
- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> LOCKED-IN</th>
-<th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>OTHERS</th>
-<th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>ACTION</th> -->
-<!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 8px; text-align: center;'>USER</th>"; -->
+  
             </tr>
         </thead>
         <tbody>
@@ -278,31 +235,7 @@ body{
                     echo "<td>" . htmlspecialchars($row["contact_number"]) . "</td>";
                     // echo "<td>" . htmlspecialchars($row["nap"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["latitude"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["longitude"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["pldt_existing"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["pldt_sales_new"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["pldt_sales_switch"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["globe_existing"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["globe_sales_new"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["globe_sales_switch"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["converge_existing"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["converge_sales_new"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["converge_sales_switch"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["no_providers_existing"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["no_providers_sales_new"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["no_providers_sales_switch"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["unengaged_existing"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["unengaged_sales_new"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["unengaged_sales_switch"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["other_prov"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["price"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["satisfied"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["locked_in"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["others_not_signing_up"]) . "</td>";
-                    // echo "<td><button onclick='viewEntry(" . $row['id'] . ")'>View</button></td>";
-                    // echo "<td>" . htmlspecialchars($row["user_id"]) . "</td>";
-                    // Add more data cells as needed
+                
                     echo "</tr>";
                 }
             } else {
@@ -386,16 +319,7 @@ $conn->close();
 
 
 // nav
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementsByClassName("container")[0].style.marginLeft = "250px";
-}
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementsByClassName("container")[0].style.marginLeft = "0";
-
-}
 function searchTable() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("searchInput");
@@ -582,5 +506,8 @@ $conn->close();
     }
 </script>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

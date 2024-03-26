@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixed Side Nav and Top Navbar with Search</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    /* Adjusting padding to make space for fixed top navbar */
+    body {
+        padding-top: 70px;
+        background-color: #800000;
+    }
+
+    /* Fixed top navbar */
+    .navbar-fixed-top {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1030;
+    }
+
+    /* Fixed side navbar */
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1031;
+        top: 56px; /* Height of top navbar */
+        left: 0;
+        background-color: green;
+        padding-top: 20px;
+    }
+
+    /* Style for links in the side navbar */
+    .sidenav a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+    }
+
+    /* Style for active link in the side navbar */
+    .sidenav a.active {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    /* Add padding to the main content area to prevent content from being hidden under the fixed side navbar */
+    .main-content {
+        margin-left: 250px; /* Width of the side navbar */
+        padding: 20px;
+    }
+    .scrollable-div {
+            overflow-x: auto;
+            overflow-y: auto;
+            width: 85%; /* Adjust based on your layout needs */
+            height: 500px; /* Set a height to enable vertical scrolling */
+            margin-left: auto;
+    /* margin-right: auto; */
+            
+        }
+
+        .scrollable-table {
+            border-collapse: collapse;
+            width: auto; /* Set to auto for horizontal scrolling */
+            min-width: 100px; /* Ensure the table is wide enough to demonstrate horizontal scrolling */
+            
+        }
+
+        .scrollable-table, th, td {
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+
+        th, h2{
+            padding: 1px;
+            text-align: center;
+            color: white;
+            
+
+        }
+td {
+            padding: 1px;
+            text-align: center;
+            color: black;
+           
+}
+        thead th {
+            position: sticky;
+            top: 0;
+            background-color: green;
+            z-index: 1;
+        }
+
+        thead th:nth-child(-n+2) {
+            position: sticky;
+            left: 0;
+            background-color: green;
+            z-index: 1;
+        }
+        .sidenav .logout {
+  position: absolute;
+  bottom: 50px;
+  left: 5px;
+}
+        /* table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: green;
+} */
+</style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+    <a class="navbar-brand" href="#">CALL SLIP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">ADD FORM <i class="fas fa-plus"></i></a>
+            </li> -->
+         
+        </ul>
+        <!-- Search Form -->
+        <form class="form-inline my-2 my-lg-0">
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." >
+            <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button> -->
+        </form>
+    </div>
+</nav>
+
+<!-- Side Navbar -->
+<div class="sidenav">
+<a href="user_table.php" class="agent"><i class="fas fa-user-alt"></i>Agent</a>
+ <a href="count.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Agent Entry</a>
+ <a href="download.php" class="agentEntry"><i class="fas fa-file-excel"></i>Export Excel</a>
+
+ <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+<div class="scrollable-div">
+ <table class="scrollable-table" >
+
+
+        <thead>
+            <tr>
+           <th>Entry Number</th>
+           <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Entry Date</th>
+    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Full Name</th>
+  <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Zone</th>
+    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Barangay</th>
+    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>ACTION</th>
+    <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>City</th> 
+   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>Province</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LCP</th>
+   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>Contact Number</th>
+   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>NAP</th>
+ <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>AGENT</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LATITUDE</th> 
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LONGITUDE</th>
+   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT SALES NEW</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT SALES SWITCH</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING GLOBE</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING GLOBE SALES NEW</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING GLOBE SALES SWITCH</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING CONVERGE</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING CONVERGE SALES NEW</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING CONVERGE SALES SWITCH</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> NO PROVIDERS</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  PROVIDERS SALES NEW</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  PROVIDERS SALES SWITCH</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>UNENGAGED</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  UNENGAGED SALES NEW</th>
+    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  UNENGAGED SALES SWITCH</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>OTHER PROVIDER</th>
+ <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> PRICE</th>
+ <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>SATISFIED</th>
+ <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> LOCKED-IN</th>
+<th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>OTHERS</th>
+<th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>ACTION</th>
+ <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 8px; text-align: center;'>USER</th>"; -->
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+// Check if user is logged in
+if (isset($_SESSION['userdata']) && $_SESSION['userdata']['user_role'] == "agent") {
+    $agent = $_SESSION['userdata']['username'];
+
+    // Check if a new entry has been made (you need to replace 'YOUR_POST_FIELD_NAMES' with the actual names of your form fields)
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['YOUR_POST_FIELD_NAMES'])) {
+        // Insert new entry into the database (assuming you have code here to insert the entry)
+
+        // Fetch entries for the logged-in agent
+        $sql = "SELECT * FROM slip_entry WHERE agent = '$agent' ORDER BY id DESC";
+        $result = $conn->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            // Display table header
+            // echo "<table>";
+            // echo "<tr><th>ID</th><th>Entry Date</th><th>Name</th><th>Zone</th><th>Barangay</th><th>Action</th></tr>";
+
+            // Display table rows
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
+                echo "<td><a href='view.php?id=" . $row['id'] . "'>" . htmlspecialchars($row["name"]) . "</a></td>";
+                echo "<td>" . htmlspecialchars($row["zone"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
+                echo "<td><a href='edit.php?id=" . $row["id"] . "' class='edit-button'><i class='fas fa-edit edit-icon'></i> Edit</a></td>";
+                echo "</tr>";
+            }
+
+            // Close the table
+            echo "</table>";
+        } else {
+            // echo "No entries found for the agent: $agent";
+            // echo "<br><a href='e-form.php'><button>Add Entry</button></a>";
+        }
+
+        // Calculate the date and time one hour ago
+        $truncate_datetime = date('Y-m-d H:i:s', strtotime('-1 hour'));
+
+        // Truncate entries older than one hour
+        $truncate_sql = "DELETE FROM slip_entry WHERE agent = '$agent' AND entry_date < '$truncate_datetime'";
+        if ($conn->query($truncate_sql) !== TRUE) {
+            echo "Error truncating entries: " . $conn->error;
+        }
+    } else {
+        // Fetch entries for the logged-in agent
+        $sql = "SELECT * FROM slip_entry WHERE agent = '$agent' ORDER BY id DESC";
+        $result = $conn->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            // Display table header
+            // echo "<table>";
+            // echo "<tr><th>ID</th><th>Entry Date</th><th>Name</th><th>Zone</th><th>Barangay</th><th>Action</th></tr>";
+
+            // Display table rows
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
+                echo "<td><a href='view.php?id=" . $row['id'] . "'>" . htmlspecialchars($row["name"]) . "</a></td>";
+                echo "<td>" . htmlspecialchars($row["zone"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
+                echo "<td><a href='edit.php?id=" . $row["id"] . "' class='edit-button'><i class='fas fa-edit edit-icon'></i> Edit</a></td>";
+                echo "</tr>";
+            }
+
+            // Close the table
+            echo "</table>";
+        } else {
+            // echo "No entries found for the agent: $agent";
+            // echo "<br><a href='e-form.php'><button>Add Entry</button></a>";
+        }
+    }
+} else {
+    echo "You are not logged in or not authorized to view this page.";
+}
+
+$conn->close();
+?>
+
+
+           </tbody>
+       </table>
+   </div>
+   </div>
+        </div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

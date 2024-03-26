@@ -75,6 +75,21 @@ th, td {
 }
 
 
+@media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+
+        @media screen and (min-width: 600px) {
+            form {
+                width: 60%;
+            }
+        }
+        @media (min-width: 992px) {
+        .form-group {
+            margin-bottom: 0; /* Remove bottom margin for smaller screens */
+        }
+    }
     </style>
 </head>
 <body>
@@ -175,6 +190,7 @@ th, td {
     ?>
 
     <form method="POST" action="">
+    <div class="container">
         <!-- Display the form with input fields pre-filled with entry details -->
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" value="<?php echo $row['name']; ?>">
@@ -185,9 +201,8 @@ th, td {
         <label for="barangay">Barangay:</label>
         <input type="text" name="barangay" id="barangay" value="<?php echo $row['barangay']; ?>">
 
-        <label for="entry_date">entry date:</label>
-        <input type="date" name="entry_date" id="entry_date" value="<?php echo $row['entry_date']; ?>">
-
+        <label for="entry_date">ENTRY DATE:</label>
+                    <input type="date" id="entry_date" name="entry_date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>">
         <label for="city">City:</label>
         <input type="text" name="city" id="city" value="<?php echo $row['city']; ?>">
         
@@ -202,19 +217,9 @@ th, td {
 
         <label for="nap">Nap:</label>
         <input type="text" name="nap" id="nap" value="<?php echo $row['nap']; ?>">
-        
-        <!-- <div class="form-group"> -->
-            <label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label>
-            <label for="price">PRICE:</label>
-            <input type="text" name="price" id="price" value="<?php echo $row['price']; ?>">
-            <label for="satisfied">SATISFIED:</label>
-            <input type="text" name="satisfied" id="satisfied" value="<?php echo $row['satisfied']; ?>">
-            <label for="locked_in">LOCKED-IN:</label>
-            <input type="text" name="locked_in" id="locked_in" value="<?php echo $row['locked_in']; ?>">
-            <label for="others_not_signing_up">OTHERS:</label>
-            <input type="text" name="others_not_signing_up" id="others_not_signing_up" value="<?php echo $row['others_not_signing_up']; ?>">
-        <!-- </div> -->
-        <table>
+       
+        <br>
+            <table>
         <tr>
             <th></th>
             <th>EXISTING</th>
@@ -359,16 +364,48 @@ th, td {
                 </select>
             </td>
             
-<!-- <center>
-           <tr>
-           <td>OTHER PROVIDERS</td>
-            <td>
-            <input type="text" name="globe_additional_info" placeholder="EXAMPLE P2P">
-        </td>
-    </tr></center> -->
+      
+            </tr>
+
+    <th rowspan="1">OTHER PROVIDERS</th>
+    <td>
+        <label for="other_provider">OTHER PROVIDER</label>
+        <input type="text" id="other_prov" name="other_prov"><br>
+    </td>
+</tr>
+    </table>
+    
+        </div>
     
         </tr>
     </table>
+    <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+               
+            <input type="checkbox" id="price" name="price" value="PRICE"> 
+            <label for="price">PRICE:</label>
+                </div>
+        </div>
+                <div class="col-md-4">
+                <div class="form-group">
+              
+            <input type="checkbox" id="satisfied" name="satisfied" value="SATISFIED"> 
+             <label for="satisfied">SATISFIED:</label>
+                </div>
+        </div>
+        <div class="col-md-4">
+                <div class="form-group">
+            
+            <input type="checkbox" id="locked_in" name= "locked_in" value="LOCKED_IN"> 
+            <label for="locked_in">LOCKED-IN:</label>
+                </div>
+        </div>
+  
+            <label for="others_not_signing_up">OTHERS:</label>
+            <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
+          
     <label for="other provider">OTHER PROVIDER</label>
     <input type="text" name="other_prov" id="other_prov" value="<?php echo $row['other_prov']; ?>"><br>
     <input type="submit" value="Submit">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
     <title>CALL - SLIP ENTRIES</title>
     <style>
 
@@ -65,14 +65,21 @@ table {
     margin-bottom: 40px;
     margin-left: auto;
     margin-right: auto;
+    background:white;
 }
 
 
-th, td, h2 {
+th,  h2 {
     border: 1px solid #ddd;
     padding: 4px;
     text-align: center;
-    color: white
+    color: white;
+}
+td, h2 {
+    border: 2px solid black;
+    padding: 4px;
+    text-align: center;
+    color: black;
 }
 
 th {
@@ -94,7 +101,9 @@ body{
     </style>
 </head>
 <body>
-<a href="entry.php" class="back-button" onclick="history.back()" style="background-color: white; float: right; margin-right: 110px;">Back</a>
+<a href="entry.php" class="back-button" onclick="history.back()" style="background-color: white; float: right; margin-right: 110px;">
+    <i class="fas fa-arrow-alt-circle-left"></i> Back
+</a>
 <form method="post">
     <label for="date_from">From:</label>
     <input type="date" id="date_from" name="date_from" value="<?php echo $date_from; ?>">
@@ -173,7 +182,7 @@ if ($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
         // Display "agent" column
-        echo "<td><a href='count_table.php?barangay=" . urlencode($row['barangay']) . "'>" . htmlspecialchars($row["agent"]) . "</a></td>";
+        echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
         // Display "count" column
         echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
         // Display the rest of the columns
