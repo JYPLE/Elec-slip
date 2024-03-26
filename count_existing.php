@@ -129,7 +129,7 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
 // Filter entries based on the date range
 $sql = "SELECT 
-            agent, 
+            barangay,
             COUNT(*) AS entry_count,
             SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
             SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
@@ -141,12 +141,11 @@ $sql = "SELECT
             SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
             SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
             SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count,
-            SUM(CASE WHEN satisfied = 'SATISFIED' THEN 1 ELSE 0 END) AS satisfied_count,
-            SUM(CASE WHEN locked_in = 'LOCKED_IN' THEN 1 ELSE 0 END) AS locked_in_count,
-            SUM(CASE WHEN price = 'PRICE' THEN 1 ELSE 0 END) AS price_count
+            SUM(CASE WHEN satisfied = 'Yes' THEN 1 ELSE 0 END) AS satisfied_count
+           
         FROM slip_entry 
         WHERE entry_date BETWEEN '$date_from' AND '$date_to'
-        GROUP BY agent";
+        GROUP BY barangay";
 
 $result = $conn->query($sql);
 
@@ -156,35 +155,29 @@ if ($result && $result->num_rows > 0) {
     echo "<thead><tr>";
         
     // Header for "Agent"
-    echo "<th rowspan='2'>Agent</th>";
+    echo "<th rowspan='2'>Barangay</th>";
     
     // Header for "Count"
-    echo "<th rowspan='2'>Entry Count</th>";
+  
     
     // Header for "Price"
-    // echo "<th rowspan='2'>Price</th>";
+    
     
     // Header for "SATISFIED"
-    // echo "<th rowspan='2'>SATISFIED</th>";
-    
+   
     // Header for "LOCK IN"
-    // echo "<th rowspan='2'>LOCK IN</th>";
+   
     
-    // Remaining headers 
-    echo "<th colspan='3'>IF NOT SIGNING-UP TO PLDT- WHY?</th>";
+    // Remaining headers
     echo "<th colspan='2'>PLDT Existing</th>";
     echo "<th colspan='2'>Globe Existing</th>";
     echo "<th colspan='2'>Converge Existing</th>";
     echo "<th colspan='2'>No Providers Existing</th>";
     echo "<th colspan='2'>Unengaged Existing</th>";
-   
     echo "</tr>";
         
     // Second row of headers
     echo "<tr>";
-    echo "<th>Price</th>";
-    echo "<th>SATISFIED</th>";
-    echo "<th>LOCK IN</th>";
     echo "<th>Yes</th>";
     echo "<th>No</th>";
     echo "<th>Yes</th>";
@@ -195,22 +188,15 @@ if ($result && $result->num_rows > 0) {
     echo "<th>No</th>";
     echo "<th>Yes</th>";
     echo "<th>No</th>";
-   
     echo "</tr></thead>";
         
     echo "<tbody>";
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
         // Display "agent" column
-        echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
         // Display "count" column
-        echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
-        // Display "Price" column
-        echo "<td>" . htmlspecialchars($row["price_count"]) . "</td>";
-        // Display "SATISFIED" column
-        echo "<td>" . htmlspecialchars($row["satisfied_count"]) . "</td>";
-        // Display "LOCK IN" column
-        echo "<td>" . htmlspecialchars($row["locked_in_count"]) . "</td>";
+       
         // Display the rest of the columns
         echo "<td>" . htmlspecialchars($row["pldt_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["pldt_no_count"]) . "</td>";

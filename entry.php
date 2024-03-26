@@ -148,7 +148,8 @@ td {
 <!-- Side Navbar -->
 <div class="sidenav">
 <a href="user_table.php" class="agent"><i class="fas fa-user-alt"></i>Agent</a>
- <a href="count.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Existing</a>
+ <a href="count.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Agent Entry</a>
+ <a href="count_existing.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Existing</a>
  <a href="count_sales.php" class="agentEntry"><i class="fas fa-chart-bar"></i>New Sales</a>
  <a href="count_switch.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Sales Switch</a>
  <a href="download.php" class="agentEntry"><i class="fas fa-file-export"></i>Export Excel</a>

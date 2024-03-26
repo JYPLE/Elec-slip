@@ -91,7 +91,7 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>Pldt Sales Switch:</td><td><input type="text" value="<?php echo $row["pldt_sales_switch"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE:</td><td><input type="text" value="<?php echo $row["globe_existing"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE SALES NEW:</td><td><input type="text" value="<?php echo $row["globe_sales_new"]; ?>" disabled></td></tr>
-                <tr><td>EXISTING GLOBE SALES SWITCH:</td><td><input type="number" value="<?php echo $row["globe_sales_switch"]; ?>" disabled></td></tr>
+                <tr><td>EXISTING GLOBE SALES SWITCH:</td><td><input type="text" value="<?php echo $row["globe_sales_switch"]; ?>" disabled></td></tr>
 
                 <tr><td>EXISTING CONVERGE:</td><td><input type="text" value="<?php echo $row["converge_existing"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING CONVERGE SALES NEW:</td><td><input type="text" value="<?php echo $row["converge_sales_new"]; ?>" disabled></td></tr>

@@ -237,7 +237,7 @@ th, td {
                     <input type="text" id="barangay" name="barangay"oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <div class="form-group">
-                    <label for="city">CITY:</label>
+                    <label for="city">MUNICIPALITY/CITY:</label>
                     <input type="text" id="city" name="city"oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <div class="form-group">

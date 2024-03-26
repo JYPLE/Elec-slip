@@ -129,7 +129,7 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
 // Filter entries based on the date range
 $sql = "SELECT 
-            agent, barangay,
+            barangay,
             COUNT(*) AS entry_count,
             SUM(CASE WHEN pldt_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS pldt_sales_switch_yes_count,
             SUM(CASE WHEN pldt_sales_switch = 'No' THEN 1 ELSE 0 END) AS pldt_sales_switch_no_count,
@@ -144,7 +144,7 @@ $sql = "SELECT
            
         FROM slip_entry 
         WHERE entry_date BETWEEN '$date_from' AND '$date_to'
-        GROUP BY agent";
+        GROUP BY barangay";
 
 $result = $conn->query($sql);
 
@@ -154,7 +154,8 @@ if ($result && $result->num_rows > 0) {
     echo "<thead><tr>";
         
     // Header for "Agent"
-    echo "<th rowspan='2'>Agent</th>";
+    echo "<th rowspan='2'>Barangay</th>";
+  
     
     // Header for "Count"
   
@@ -193,7 +194,8 @@ if ($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
         // Display "agent" column
-        echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
+       
         // Display "count" column
        
         // Display the rest of the columns
