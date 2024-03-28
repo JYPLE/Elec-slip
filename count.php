@@ -130,7 +130,7 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 // Filter entries based on the date range
 $sql = "SELECT 
             agent, 
-            COUNT(*) AS entry_count,
+            COUNT(*) AS entry_count, entry_date,
             SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
             SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
             SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
@@ -162,13 +162,13 @@ if ($result && $result->num_rows > 0) {
     echo "<th rowspan='2'>Entry Count</th>";
     
     // Header for "Price"
-    // echo "<th rowspan='2'>Price</th>";
+    echo "<th rowspan='2'>Date</th>";
     
     // Header for "SATISFIED"
     // echo "<th rowspan='2'>SATISFIED</th>";
     
     // Header for "LOCK IN"
-    // echo "<th rowspan='2'>LOCK IN</th>";
+    // echo "<th rowspan='6'>LOCK IN</th>";
     
     // Remaining headers 
     echo "<th colspan='3'>IF NOT SIGNING-UP TO PLDT- WHY?</th>";
@@ -205,8 +205,10 @@ if ($result && $result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
         // Display "count" column
         echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
         // Display "Price" column
         echo "<td>" . htmlspecialchars($row["price_count"]) . "</td>";
+      
         // Display "SATISFIED" column
         echo "<td>" . htmlspecialchars($row["satisfied_count"]) . "</td>";
         // Display "LOCK IN" column

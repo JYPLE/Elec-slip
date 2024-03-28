@@ -36,10 +36,17 @@ function getAgentName($user_id) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CALL - SLIP ENTRIES</title>
+    <link rel="stylesheet" href="styles.css">
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <head>
     <title>Call Slip Entries Form with Side Nav</title>
     <style>
@@ -161,7 +168,8 @@ table {
     border-collapse: collapse;
     margin-bottom: 5px;
     color: white;
-    background-color: green;
+    background-color: #800000;
+    
 }
 
 th, td {
@@ -189,6 +197,13 @@ th, td {
     }
     </style>
 </head>
+<script>
+        // JavaScript to handle form submission
+        function submitForm() {
+            // Add your form submission logic here
+            alert('Form submitted successfully!');
+        }
+    </script>
 <body>
 
 <div id="mySidenav" class="sidenav">
@@ -277,6 +292,7 @@ th, td {
         <tr>
             <th></th>
             <th>EXISTING</th>
+            <th>LOCK IN</th>
             <th>SALES NEW</th>
             <th>SALES SWITCH</th>
         </tr>
@@ -289,18 +305,26 @@ th, td {
                 </select>
             </td>
             <td>
+            <label for=""></label>
+            <input type="date" id="other_prov" name="other_prov"><br>
+        </td> 
+            <td>
                 <select name="pldt_sales_new">
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+      
+      
             <td>
-                <select name="pldt_sales_switch">
+                <select name="pldt_sales_switch" style="display: none;">
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+            
         </tr>
+        
         <tr>
             <td>GLOBE:</td>
             <td>
@@ -309,6 +333,10 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+            <td>
+            <label for=""></label>
+            <input type="date" id="other_prov" name="other_prov"><br>
+        </td> 
             <td>
                 <select name="globe_sales_new">
                     <option value="No">No</option>
@@ -331,6 +359,10 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+            <td>
+            <label for=""></label>
+            <input type="date" id="other_prov" name="other_prov"><br>
+        </td> 
             <td>
                 <select name="converge_sales_new">
                    
@@ -421,11 +453,25 @@ th, td {
       
            <tr>
 
-            <th rowspan="2">OTHER PROVIDERS</th>
+            <th rowspan="2">OTHER PROVIDER</th>
         <td>
-            <label for="other_provider">OTHER PROVIDER</label>
+            <label for="other_provider"></label>
             <input type="text" id="other_prov" name="other_prov"><br>
         </td> 
+        <td>
+                <select name="pldt_sales_new">
+                   
+                    <option value="No">No</option>
+                     <option value="Yes">Yes</option>
+                </select>
+            </td>
+            <td>
+                <select name="sales_switch">
+                   
+                    <option value="No">No</option>
+                     <option value="Yes">Yes</option>
+                </select>
+            </td>
         </tr>
     </table>
     
@@ -481,7 +527,40 @@ function closeNav() {
 }
 </script>
 
+<script>
+            // Check if the browser supports Application Cache
+            if ('applicationCache' in window) {
+                // Create a new Application Cache object
+                var appCache = window.applicationCache;
 
+                // Define the manifest file to cache
+                appCache.addEventListener('checking', function() {
+                    console.log('Checking for updates...');
+                });
+
+                // Define event listeners for various cache events
+                appCache.addEventListener('noupdate', function() {
+                    console.log('No updates found.');
+                });
+
+                appCache.addEventListener('updateready', function() {
+                    console.log('An update is available.');
+                    appCache.swapCache();
+                    location.reload();
+                });
+
+                appCache.addEventListener('cached', function() {
+                    console.log('Content has been cached.');
+                });
+
+                appCache.addEventListener('error', function(e) {
+                    console.log('Error occurred:', e);
+                });
+
+                // Trigger the update process
+                appCache.update();
+            }
+        </script>
 <!-- <script>
     // Function to open Google Maps with provided longitude and latitude
     function openGoogleMaps() {

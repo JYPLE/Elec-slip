@@ -66,6 +66,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     background:white;
+   
 }
 
 
@@ -129,7 +130,7 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
 // Filter entries based on the date range
 $sql = "SELECT 
-            barangay,
+            barangay, entry_date,
             COUNT(*) AS entry_count,
             SUM(CASE WHEN pldt_sales_switch = 'Yes' THEN 1 ELSE 0 END) AS pldt_sales_switch_yes_count,
             SUM(CASE WHEN pldt_sales_switch = 'No' THEN 1 ELSE 0 END) AS pldt_sales_switch_no_count,
@@ -152,11 +153,11 @@ if ($result && $result->num_rows > 0) {
     
     echo "<table class='scrollable-table'>";
     echo "<thead><tr>";
-        
+    echo "<h1 style=color:white;text-align:center; text-style:bold;>Sales Switch</h1>";
     // Header for "Agent"
     echo "<th rowspan='2'>Barangay</th>";
   
-    
+    echo "<th rowspan='2'>Date</th>";
     // Header for "Count"
   
     
@@ -169,11 +170,11 @@ if ($result && $result->num_rows > 0) {
    
     
     // Remaining headers
-    echo "<th colspan='2'>PLDT Sales switch</th>";
-    echo "<th colspan='2'>Globe Sales switch</th>";
-    echo "<th colspan='2'>Converge Sales switch</th>";
-    echo "<th colspan='2'>No Providers Sales switch</th>";
-    echo "<th colspan='2'>Unengaged Sales switch</th>";
+    echo "<th colspan='2'>PLDT </th>";
+    echo "<th colspan='2'>Globe </th>";
+    echo "<th colspan='2'>Converge </th>";
+    echo "<th colspan='2'>No Providers </th>";
+    echo "<th colspan='2'>Unengaged </th>";
     echo "</tr>";
         
     // Second row of headers
@@ -195,7 +196,7 @@ if ($result && $result->num_rows > 0) {
         echo "<tr>";
         // Display "agent" column
         echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
-       
+        echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
         // Display "count" column
        
         // Display the rest of the columns

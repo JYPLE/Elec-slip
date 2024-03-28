@@ -130,7 +130,7 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 // Filter entries based on the date range
 $sql = "SELECT 
             barangay,
-            COUNT(*) AS entry_count,
+            COUNT(*) AS entry_count, entry_date,
             SUM(CASE WHEN pldt_sales_new = 'Yes' THEN 1 ELSE 0 END) AS pldt_sales_new_yes_count,
             SUM(CASE WHEN pldt_sales_new = 'No' THEN 1 ELSE 0 END) AS pldt_sales_new_no_count,
             SUM(CASE WHEN globe_sales_new = 'Yes' THEN 1 ELSE 0 END) AS globe_sales_new_yes_count,
@@ -152,12 +152,12 @@ if ($result && $result->num_rows > 0) {
     
     echo "<table class='scrollable-table'>";
     echo "<thead><tr>";
-        
+ 
     // Header for "Agent"
     echo "<th rowspan='2'>Barangay</th>";
     
     // Header for "Count"
-  
+    echo "<th rowspan='2'>Date</th>";
     
     // Header for "Price"
     
@@ -168,11 +168,11 @@ if ($result && $result->num_rows > 0) {
    
     
     // Remaining headers
-    echo "<th colspan='2'>PLDT Sales New</th>";
-    echo "<th colspan='2'>Globe Sales New</th>";
-    echo "<th colspan='2'>Converge Sales New</th>";
-    echo "<th colspan='2'>No Providers Sales New</th>";
-    echo "<th colspan='2'>Unengaged Sales New</th>";
+    echo "<th colspan='2'>PLDT </th>";
+    echo "<th colspan='2'>Globe </th>";
+    echo "<th colspan='2'>Converge </th>";
+    echo "<th colspan='2'>No Providers</th>";
+    echo "<th colspan='2'>Unengaged </th>";
     echo "</tr>";
         
     // Second row of headers
@@ -194,6 +194,7 @@ if ($result && $result->num_rows > 0) {
         echo "<tr>";
         // Display "agent" column
         echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
         // Display "count" column
        
         // Display the rest of the columns

@@ -152,6 +152,7 @@ td {
  <a href="count_existing.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Existing</a>
  <a href="count_sales.php" class="agentEntry"><i class="fas fa-chart-bar"></i>New Sales</a>
  <a href="count_switch.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Sales Switch</a>
+ <a href="" class="agentEntry"><i class="fas fa-chart-bar"></i>Field Problem</a>
  <a href="download.php" class="agentEntry"><i class="fas fa-file-export"></i>Export Excel</a>
 
  <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>

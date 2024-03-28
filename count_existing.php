@@ -101,6 +101,7 @@ body{
     </style>
 </head>
 <body>
+<h1 style=color:white;text-align:center;font-style:bold;>Existing Fiber Optic</h1> 
 <a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 200px;">
     <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back
 </a>
@@ -129,7 +130,7 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
 // Filter entries based on the date range
 $sql = "SELECT 
-            barangay,
+            barangay, entry_date,
             COUNT(*) AS entry_count,
             SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
             SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
@@ -145,7 +146,7 @@ $sql = "SELECT
            
         FROM slip_entry 
         WHERE entry_date BETWEEN '$date_from' AND '$date_to'
-        GROUP BY barangay";
+        GROUP BY barangay, entry_date";
 
 $result = $conn->query($sql);
 
@@ -157,8 +158,8 @@ if ($result && $result->num_rows > 0) {
     // Header for "Agent"
     echo "<th rowspan='2'>Barangay</th>";
     
-    // Header for "Count"
-  
+    // Header for "date"
+    echo "<th rowspan='2'>Date</th>";
     
     // Header for "Price"
     
@@ -169,11 +170,11 @@ if ($result && $result->num_rows > 0) {
    
     
     // Remaining headers
-    echo "<th colspan='2'>PLDT Existing</th>";
-    echo "<th colspan='2'>Globe Existing</th>";
-    echo "<th colspan='2'>Converge Existing</th>";
-    echo "<th colspan='2'>No Providers Existing</th>";
-    echo "<th colspan='2'>Unengaged Existing</th>";
+    echo "<th colspan='2'>PLDT </th>";
+    echo "<th colspan='2'>Globe </th>";
+    echo "<th colspan='2'>Converge </th>";
+    echo "<th colspan='2'>No Providers </th>";
+    echo "<th colspan='2'>Unengaged</th>";
     echo "</tr>";
         
     // Second row of headers
@@ -195,6 +196,7 @@ if ($result && $result->num_rows > 0) {
         echo "<tr>";
         // Display "agent" column
         echo "<td>" . htmlspecialchars($row["barangay"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
         // Display "count" column
        
         // Display the rest of the columns
