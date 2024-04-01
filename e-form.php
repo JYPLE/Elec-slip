@@ -1,5 +1,15 @@
 <?php
 session_start();
+// Database connection parameters
+require_once 'db_connection.php';
+
+// Establish database connection
+$conn = connect_db();
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Dummy login logic for demonstration purposes
 if (isset($_POST['logins.php'])) {
@@ -7,7 +17,7 @@ if (isset($_POST['logins.php'])) {
     // This code should be replaced with your actual authentication logic
     $user_id = $_POST['user_id']; // Assuming agent_id is unique for each agent
     $_SESSION['user_id'] = $user_id; // Fixed variable name
-    $_SESSION['username'] = getAgentName($user_id); // Function to get agent name from database
+    $_SESSION['username'] = getAgentName($user_id, $conn); // Pass the connection to the function
     header("Location: ".$_SERVER['PHP_SELF']); // Redirect to refresh the page after login
     exit();
 }
@@ -20,21 +30,33 @@ function getCurrentAgentName() {
     }
 }
 
-function getAgentName($user_id) {
+function getAgentName($user_id, $conn) {
     // Query the database to get the agent name associated with the given agent_id
     // Replace this with your actual database query
-    // Example: SELECT agent_name FROM agents WHERE agent_id = $user_id
-    // Example: Assuming you have a database connection stored in $pdo
-    global $pdo; // Added global keyword to use $pdo inside the function
-    $stmt = $pdo->prepare("SELECT username FROM user WHERE user_id = ?");
-    $stmt->execute([$user_id]); // Fixed variable name
-    $row = $stmt->fetch();
+    $stmt = $conn->prepare("SELECT username FROM user WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
     return $row['username'];
-    
-    // For demonstration purposes, returning a hardcoded agent name
-    return "Agent " . $user_id;
 }
+
+// Fetch data from the database table "field"
+$query = "SELECT problem FROM field WHERE prv_id = ?";
+$stmt = $conn->prepare($query);
+$prv_id = 1; // Assuming $prv_id contains the ID you want to fetch from the database
+$stmt->bind_param("i", $prv_id);
+$stmt->execute();
+$stmt->bind_result($problem);
+$stmt->fetch();
+
+// Close the prepared statement
+$stmt->close();
+
+// Close the database connection
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -305,8 +327,8 @@ th, td {
                 </select>
             </td>
             <td>
-            <label for=""></label>
-            <input type="date" id="other_prov" name="other_prov"><br>
+            
+            <input type="date" id="pldt_lock_date" name="pldt_lock_date"><br>
         </td> 
             <td>
                 <select name="pldt_sales_new">
@@ -334,8 +356,8 @@ th, td {
                 </select>
             </td>
             <td>
-            <label for=""></label>
-            <input type="date" id="other_prov" name="other_prov"><br>
+            
+            <input type="date" id="globe_lock_date" name="globe_lock_date"><br>
         </td> 
             <td>
                 <select name="globe_sales_new">
@@ -360,8 +382,8 @@ th, td {
                 </select>
             </td>
             <td>
-            <label for=""></label>
-            <input type="date" id="other_prov" name="other_prov"><br>
+          
+            <input type="date" id="lock_date" name="lock_date"><br>
         </td> 
             <td>
                 <select name="converge_sales_new">
@@ -477,8 +499,24 @@ th, td {
     
         </div>
     
+
         <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
-        <div class="row">
+        <td></td>
+            <td>
+           
+                <select name="field_probs">
+                    
+                    <option value="LOCKED IN">LOCKED IN</option>
+                    <option value="PRICE">PRICE</option>
+                    <option value="SATISFIED">SATISFIED</option>
+                    <option value="FINANCIAL">FINANCIAL</option>
+                    <option value="DELAYED REPAIR">DELAYED REPAIR</option>
+                </select>
+            </td>
+            <label for="others_not_signing_up">OTHERS:</label>
+            <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
+          
+       <div class="row" style="display: none">
             <div class="col-md-4">
                 <div class="form-group">
                
@@ -499,11 +537,13 @@ th, td {
             <input type="checkbox" id="locked_in" name= "locked_in" value="LOCKED_IN"> 
             <label for="locked_in">LOCKED-IN:</label>
                 </div>
+        </div> 
+
         </div>
-  
-            <label for="others_not_signing_up">OTHERS:</label>
-            <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
-          
+     
+
+
+           
     
   
     <!-- <label for="other provider">OTHER PROVIDER</label>
@@ -513,7 +553,7 @@ th, td {
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </div>
+   
 
     <script>
 function openNav() {

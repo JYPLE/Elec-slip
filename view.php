@@ -86,16 +86,19 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>Longitude:</td><td><input type="number" value="<?php echo $row["longitude"]; ?>" disabled></td></tr>
                 <tr><td>Latitude:</td><td><input type="number" value="<?php echo $row["latitude"]; ?>" disabled></td></tr>
                 <tr><td>Pldt Existing:</td><td><input type="text" value="<?php echo $row["pldt_existing"]; ?>" disabled></td></tr>
-
+                <tr><td>PLDT LOCK IN:</td><td><input type="text" value="<?php echo $row["pldt_lock_date"]; ?>" disabled></td></tr>
                 <tr><td>Pldt Sales_new:</td><td><input type="text" value="<?php echo $row["pldt_sales_new"]; ?>" disabled></td></tr>
                 <tr><td>Pldt Sales Switch:</td><td><input type="text" value="<?php echo $row["pldt_sales_switch"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE:</td><td><input type="text" value="<?php echo $row["globe_existing"]; ?>" disabled></td></tr>
+                <tr><td>GLOBE LOCK IN:</td><td><input type="text" value="<?php echo $row["globe_lock_date"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE SALES NEW:</td><td><input type="text" value="<?php echo $row["globe_sales_new"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE SALES SWITCH:</td><td><input type="text" value="<?php echo $row["globe_sales_switch"]; ?>" disabled></td></tr>
 
                 <tr><td>EXISTING CONVERGE:</td><td><input type="text" value="<?php echo $row["converge_existing"]; ?>" disabled></td></tr>
+                <tr><td>CONVERGE LOCK IN:</td><td><input type="text" value="<?php echo $row["lock_date"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING CONVERGE SALES NEW:</td><td><input type="text" value="<?php echo $row["converge_sales_new"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING CONVERGE SALES SWITCH:</td><td><input type="text" value="<?php echo $row["converge_sales_switch"]; ?>" disabled></td></tr>
+
 
                 <tr><td>OTHER EXISTING:</td><td><input type="text" value="<?php echo $row["others_existing"]; ?>" disabled></td></tr>
                 <tr><td>OTHER SALES NEW:</td><td><input type="text" value="<?php echo $row["others_sales_new"]; ?>" disabled></td></tr>
@@ -110,9 +113,9 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>UNENGAGED SALES SWITCH:</td><td><input type="text" value="<?php echo $row["unengaged_sales_switch"]; ?>" disabled></td></tr>
 
                 <tr><td>OTHER PROVIDER:</td><td><input type="text" value="<?php echo $row["other_prov"]; ?>" disabled></td></tr>
-                <tr><td>PRICE:</td><td><input type="number" value="<?php echo $row["price"]; ?>" disabled></td></tr>
-                <tr><td>SATISFIED:</td><td><input type="text" value="<?php echo $row["satisfied"]; ?>" disabled></td></tr>
-                <tr><td>LOCKED-IN:</td><td><input type="text" value="<?php echo $row["locked_in"]; ?>" disabled></td></tr>
+               
+                <tr><td>NOT SIGNING IN:</td><td><input type="text" value="<?php echo $row["field_probs"]; ?>" disabled></td></tr>
+              
                 <tr><td>OTHERS:</td><td><input type="text" value="<?php echo $row["others_not_signing_up"]; ?>" disabled></td></tr>
                 <!-- Add other fields here with similar pattern -->
             </table>
