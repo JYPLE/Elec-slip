@@ -201,17 +201,17 @@ th, td {
 
 
 
-        @media screen and (max-height: 450px) {
+        @media screen and (max-height: 300px) {
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
         }
 
-        @media screen and (min-width: 600px) {
+        @media screen and (min-width: 400px) {
             form {
                 width: 60%;
             }
         }
-        @media (min-width: 992px) {
+        @media (min-width: 700px) {
         .form-group {
             margin-bottom: 0; /* Remove bottom margin for smaller screens */
         }
