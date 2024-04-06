@@ -72,23 +72,22 @@ if ($result && $result->num_rows > 0) {
         <div class="entry-details">
             <table>
                 <tr><th>Field</th><th>Info</th></tr>
-                <tr><td>Entry Number:</td><td><?php echo $row["id"]; ?></td></tr>
-                <tr><td>Entry Date:</td><td><input type="date" value="<?php echo $row["entry_date"]; ?>" disabled></td></tr>
-                <tr><td>Name:</td><td><input type="text" value="<?php echo $row["name"]; ?>" disabled></td></tr>
-                <tr><td>Zone:</td><td><input type="text" value="<?php echo $row["zone"]; ?>" disabled></td></tr>
-                <tr><td>Barangay:</td><td><input type="text" value="<?php echo $row["barangay"]; ?>" disabled></td></tr>
-                <tr><td>City:</td><td><input type="text" value="<?php echo $row["city"]; ?>" disabled></td></tr>
-                <tr><td>Province:</td><td><input type="text" value="<?php echo $row["province"]; ?>" disabled></td></tr>
-
-                <tr><td>Lcp:</td><td><input type="text" value="<?php echo $row["lcp"]; ?>" disabled></td></tr>
-                <tr><td>Contact Number:</td><td><input type="number" value="<?php echo $row["contact_number"]; ?>" disabled></td></tr>
-                <tr><td>Nap:</td><td><input type="text" value="<?php echo $row["nap"]; ?>" disabled></td></tr>
-                <tr><td>Longitude:</td><td><input type="number" value="<?php echo $row["longitude"]; ?>" disabled></td></tr>
-                <tr><td>Latitude:</td><td><input type="number" value="<?php echo $row["latitude"]; ?>" disabled></td></tr>
-                <tr><td>Pldt Existing:</td><td><input type="text" value="<?php echo $row["pldt_existing"]; ?>" disabled></td></tr>
+                <tr><td>ENTRY NUMBER:</td><td><?php echo $row["id"]; ?></td></tr>
+                <tr><td>ENTRY DATE:</td><td><input type="date" value="<?php echo $row["entry_date"]; ?>" disabled></td></tr>
+                <tr><td>NAME:</td><td><input type="text" value="<?php echo $row["name"]; ?>" disabled></td></tr>
+                <tr><td>ZONE:</td><td><input type="text" value="<?php echo $row["zone"]; ?>" disabled></td></tr>
+                <tr><td>BARANGAY:</td><td><input type="text" value="<?php echo $row["barangay"]; ?>" disabled></td></tr>
+                <tr><td>CITY:</td><td><input type="text" value="<?php echo $row["city"]; ?>" disabled></td></tr>
+                <tr><td>PROVINCE:</td><td><input type="text" value="<?php echo $row["province"]; ?>" disabled></td></tr>
+                <tr><td>LCP:</td><td><input type="text" value="<?php echo $row["lcp"]; ?>" disabled></td></tr>
+                <tr><td>CONTACT NUMBER:</td><td><input type="number" value="<?php echo $row["contact_number"]; ?>" disabled></td></tr>
+                <tr><td>NAP:</td><td><input type="text" value="<?php echo $row["nap"]; ?>" disabled></td></tr>
+                <tr><td>LONGITUDE:</td><td><input type="number" value="<?php echo $row["longitude"]; ?>" disabled></td></tr>
+                <tr><td>LATITUDE:</td><td><input type="number" value="<?php echo $row["latitude"]; ?>" disabled></td></tr>
+                <tr><td>PLDT EXISTING:</td><td><input type="text" value="<?php echo $row["pldt_existing"]; ?>" disabled></td></tr>
                 <tr><td>PLDT LOCK IN:</td><td><input type="text" value="<?php echo $row["pldt_lock_date"]; ?>" disabled></td></tr>
-                <tr><td>Pldt Sales_new:</td><td><input type="text" value="<?php echo $row["pldt_sales_new"]; ?>" disabled></td></tr>
-                <tr><td>Pldt Sales Switch:</td><td><input type="text" value="<?php echo $row["pldt_sales_switch"]; ?>" disabled></td></tr>
+                <tr><td>PLDT SALES NEW:</td><td><input type="text" value="<?php echo $row["pldt_sales_new"]; ?>" disabled></td></tr>
+                <tr><td>PLDT SALES SWITCH:</td><td><input type="text" value="<?php echo $row["pldt_sales_switch"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE:</td><td><input type="text" value="<?php echo $row["globe_existing"]; ?>" disabled></td></tr>
                 <tr><td>GLOBE LOCK IN:</td><td><input type="text" value="<?php echo $row["globe_lock_date"]; ?>" disabled></td></tr>
                 <tr><td>EXISTING GLOBE SALES NEW:</td><td><input type="text" value="<?php echo $row["globe_sales_new"]; ?>" disabled></td></tr>
@@ -100,9 +99,7 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>EXISTING CONVERGE SALES SWITCH:</td><td><input type="text" value="<?php echo $row["converge_sales_switch"]; ?>" disabled></td></tr>
 
 
-                <tr><td>OTHER EXISTING:</td><td><input type="text" value="<?php echo $row["others_existing"]; ?>" disabled></td></tr>
-                <tr><td>OTHER SALES NEW:</td><td><input type="text" value="<?php echo $row["others_sales_new"]; ?>" disabled></td></tr>
-                <tr><td>OTHER SALES SWITCH:</td><td><input type="text" value="<?php echo $row["others_sales_switch"]; ?>" disabled></td></tr>
+              
 
                 <tr><td>NO PROVIDERS:</td><td><input type="text" value="<?php echo $row["no_providers_existing"]; ?>" disabled></td></tr>
                 <tr><td>PROVIDERS SALES NEW:</td><td><input type="text" value="<?php echo $row["no_providers_sales_new"]; ?>" disabled></td></tr>
@@ -112,8 +109,6 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>UNENGAGED SALES NEW:</td><td><input type="text" value="<?php echo $row["unengaged_sales_new"]; ?>" disabled></td></tr>
                 <tr><td>UNENGAGED SALES SWITCH:</td><td><input type="text" value="<?php echo $row["unengaged_sales_switch"]; ?>" disabled></td></tr>
 
-                <tr><td>OTHER PROVIDER:</td><td><input type="text" value="<?php echo $row["other_prov"]; ?>" disabled></td></tr>
-               
                 <tr><td>NOT SIGNING IN:</td><td><input type="text" value="<?php echo $row["field_probs"]; ?>" disabled></td></tr>
               
                 <tr><td>OTHERS:</td><td><input type="text" value="<?php echo $row["others_not_signing_up"]; ?>" disabled></td></tr>

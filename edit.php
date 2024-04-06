@@ -151,13 +151,16 @@ th, td {
         $locked_in = $_POST['locked_in'];
         $others_not_signing_up = $_POST['others_not_signing_up'];
         $pldt_existing = $_POST['pldt_existing'];
+        $pldt_lock_date = $_POST['pldt_lock_date'];
         $pldt_sales_new = $_POST['pldt_sales_new'];
         $pldt_sales_switch = $_POST['pldt_sales_switch'];
         $globe_existing = $_POST['globe_existing'];
+        $globe_lock_date = $_POST['globe_lock_date'];
         $globe_sales_new = $_POST['globe_sales_new'];
         $globe_sales_switch = $_POST['globe_sales_switch'];
 
         $converge_existing = $_POST['converge_existing'];
+        $lock_date = $_POST['lock_date'];
         $converge_sales_new = $_POST['converge_sales_new'];
         $converge_sales_switch = $_POST['converge_sales_switch'];
 
@@ -168,15 +171,16 @@ th, td {
         $unengaged_existing = $_POST['unengaged_existing'];
         $unengaged_sales_new = $_POST['unengaged_sales_new'];
         $unengaged_sales_switch = $_POST['unengaged_sales_switch'];
+        $field_probs = $_POST['field_probs'];
         $other_prov = $_POST['other_prov'];
 
 
 
 
         // Prepare and bind the SQL statement
-        $update_sql = "UPDATE slip_entry SET name=?, zone=?, barangay=?, entry_date=?, city=?, province=?, lcp=?, contact_number=?, nap=?, price=?, satisfied=?, locked_in=?, others_not_signing_up=?, pldt_existing=?, pldt_sales_new=?, pldt_sales_switch=?, globe_existing=?, globe_sales_new=?, globe_sales_switch=?, converge_existing=?, converge_sales_new=?, converge_sales_switch=?, no_providers_existing=?, no_providers_sales_new=?, no_providers_sales_switch=?, unengaged_existing=?, unengaged_sales_new=?, unengaged_sales_switch=?, other_prov=?  WHERE id=?";
+        $update_sql = "UPDATE slip_entry SET name=?, zone=?, barangay=?, entry_date=?, city=?, province=?, lcp=?, contact_number=?, nap=?, price=?, satisfied=?, locked_in=?, others_not_signing_up=?, pldt_existing=?, pldt_lock_date=?, pldt_sales_new=?, pldt_sales_switch=?, globe_existing=?, globe_lock_date=?, globe_sales_new=?, globe_sales_switch=?, converge_existing=?, lock_date=?, converge_sales_new=?, converge_sales_switch=?, no_providers_existing=?, no_providers_sales_new=?, no_providers_sales_switch=?, unengaged_existing=?, unengaged_sales_new=?, unengaged_sales_switch=?, field_probs=?, other_prov=?  WHERE id=?";
         $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param("sssssssssssssssssssssssssssssi", $name, $zone, $barangay, $entry_date, $city, $province, $lcp, $contact_number, $nap, $price, $satisfied, $locked_in, $others_not_signing_up, $pldt_existing, $pldt_sales_new, $pldt_sales_switch, $globe_existing, $globe_sales_new, $globe_sales_switch, $converge_existing, $converge_sales_new, $converge_sales_switch, $no_providers_existing, $no_providers_sales_new, $no_providers_sales_switch, $unengaged_existing, $unengaged_sales_new, $unengaged_sales_switch, $other_prov, $id);
+        $stmt->bind_param("sssssssssssssssssssssssssssssssssi", $name, $zone, $barangay, $entry_date, $city, $province, $lcp, $contact_number, $nap, $price, $satisfied, $locked_in, $others_not_signing_up, $pldt_existing, $pldt_lock_date, $pldt_sales_new, $pldt_sales_switch, $globe_existing, $globe_lock_date, $globe_sales_new, $globe_sales_switch, $converge_existing, $lock_date, $converge_sales_new, $converge_sales_switch, $no_providers_existing, $no_providers_sales_new, $no_providers_sales_switch, $unengaged_existing, $unengaged_sales_new, $unengaged_sales_switch, $field_probs, $other_prov, $id);
 
         
         $stmt->execute();
@@ -221,197 +225,213 @@ th, td {
        
         <br>
             <table>
-        <tr>
+            <tr>
             <th></th>
             <th>EXISTING</th>
+            <th>LOCK IN</th>
             <th>SALES NEW</th>
             <th>SALES SWITCH</th>
         </tr>
-        <tr>
-            <td>PLDT:</td>
-            <td>
-                <select name="pldt_existing">
-                   <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="pldt_sales_new">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="pldt_sales_switch">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-        </tr>
+      
+        
         <tr>
             <td>GLOBE:</td>
             <td>
-                <select name="globe_existing">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+            <select name="globe_existing">
+    <option value="No"<?php if ($row['globe_existing'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['globe_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
+            
+            <input type="date" id="globe_lock_date" name="globe_lock_date" value="<?php echo $row['globe_lock_date']; ?>"><br>
+        </td> 
+            <td>
+                
                 <select name="globe_sales_new">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+    <option value="No"<?php if ($row['globe_sales_new'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['globe_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
+                
                 <select name="globe_sales_switch">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+    <option value="No"<?php if ($row['globe_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['globe_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
         </tr>
+        
         <tr>
             <td>CONVERGE:</td>
             <td>
+               
                 <select name="converge_existing">
-                    
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+    <option value="No"<?php if ($row['converge_existing'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['converge_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
+          
+            <input type="date" id="lock_date" name="lock_date" ><br>
+        </td> 
+            <td>
+               
+                   
+                    
                 <select name="converge_sales_new">
-                   
-                    <option value="No">No</option> 
-                    <option value="Yes">Yes</option>
-                </select>
+    <option value="No"<?php if ($row['converge_sales_new'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['converge_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
+                
+                   
                 <select name="converge_sales_switch">
-                   
-                    <option value="No">No</option> 
-                    <option value="Yes">Yes</option>
-                </select>
+    <option value="No"<?php if ($row['converge_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['converge_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
-        </tr>
-        <tr style="display: none">
-           <td>OTHERS:</td>
+            <tr>
+            <td>PLDT:</td>
             <td>
-                <select name="others_existing">
-                    
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="others_sales_new">
-                   
-                    <option value="No">No</option> 
-                    <option value="Yes">Yes</option>
-                </select>
+                
+                         
+                <select name="pldt_existing">
+    <option value="No"<?php if ($row['pldt_existing'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['pldt_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
-                <select name="others_sales_switch">
-                   
-                    <option value="No">No</option> 
-                    <option value="Yes">Yes</option>
-                </select>
+            
+            <input type="date" id="pldt_lock_date" name="pldt_lock_date"><br>
+        </td> 
+            <td>
+                
+                <select name="pldt_sales_new">
+    <option value="No"<?php if ($row['pldt_sales_new'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['pldt_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
-        </tr> 
+      
+      
+            <td>
+         
+                <select name="pldt_sales_switch" style="display: none;">
+    <option value="No"<?php if ($row['pldt_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['pldt_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
+            </td>
+            
+    
         <tr>
             <td>NO PROVIDERS:</td>
             <td>
+               
+                   
                 <select name="no_providers_existing">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
+    <option value="No"<?php if ($row['no_providers_existing'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['no_providers_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
-                <select name="no_providers_sales_new">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
+</td>
+            <td>
+                       
+                
+            <select name="no_providers_sales_new">
+    <option value="No"<?php if ($row['no_providers_sales_new'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['no_providers_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
-                <select name="no_providers_sales_switch">
-                    
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+            <select name="no_providers_sales_switch">
+    <option value="No"<?php if ($row['no_providers_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['no_providers_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
         </tr>
         <tr>
             <td>UNENGAGED:</td>
             <td>
-                <select name="unengaged_existing">
-                    
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+            <select name="unengaged_existing">
+    <option value="No"<?php if ($row['unengaged_existing'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['unengaged_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
-                <select name="unengaged_sales_new">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
+              
+    
+         </td>
+            <td>
+            <select name="unengaged_sales_new">
+    <option value="No"<?php if ($row['unengaged_sales_new'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['unengaged_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
             <td>
-                <select name="unengaged_sales_switch">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
+            <select name="unengaged_sales_switch">
+    <option value="No"<?php if ($row['unengaged_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['unengaged_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
             </td>
-            
+             </tr>
       
-            </tr>
+           <tr>
 
-    <th rowspan="1">OTHER PROVIDERS</th>
-    <td>
-        <label for="other_provider">OTHER PROVIDER</label>
-        <input type="text" id="other_prov" name="other_prov"><br>
-    </td>
-</tr>
-    </table>
+            <th rowspan="2">OTHER PROVIDER</th>
+        <td>
+            <label for="other_provider"></label>
+            <input type="text" id="other_prov" name="other_prov" value="<?php echo $row['other_prov']; ?>"><br>
+        </td> 
+        <td>
     
-        </div>
-    
+</td>
+        <td>
+        <select name="pldt_sales_new">
+                   
+    <option value="No"<?php if ($row['pldt_sales_new'] == 'No') echo ' selected'; ?>>No</option>
+    <option value="Yes"<?php if ($row['pldt_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
+</select>
+
+            </td>
+            <td>
+            <select name="pldt_sales_switch">
+                   
+                   <option value="No"<?php if ($row['pldt_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
+                   <option value="Yes"<?php if ($row['pldt_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
+               </select>
+            </td>
         </tr>
     </table>
-    </div>
+    
+        </div>
+    
 
-      <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-               
-            <input type="checkbox" id="price" name="price" value="PRICE"> 
-            <label for="price">PRICE:</label>
-                </div>
-        </div>
-                <div class="col-md-4">
-                <div class="form-group">
-              
-            <input type="checkbox" id="satisfied" name="satisfied" value="SATISFIED"> 
-             <label for="satisfied">SATISFIED:</label>
-                </div>
-        </div>
-        <div class="col-md-4">
-                <div class="form-group">
-            
-            <input type="checkbox" id="locked_in" name= "locked_in" value="LOCKED_IN"> 
-            <label for="locked_in">LOCKED-IN:</label>
-                </div>
-        </div>
-  
+        <center><label for="not_signing_up_reason">IF NOT SIGNING-UP TO PLDT- WHY?</label></center>
+        <td></td>
+            <td>
+           
+                <select name="field_probs">
+                <option value="LOCKED IN"<?php if ($row['field_probs'] == 'LOCKED IN') echo ' selected'; ?>>LOCKED IN</option>
+                   <option value="PRICE"<?php if ($row['field_probs'] == 'PRICE') echo ' selected'; ?>>PRICE</option>
+                   <option value="SATISFIED"<?php if ($row['field_probs'] == 'SATISFIED') echo ' selected'; ?>>SATISFIED</option>
+                   <option value="FINANCIAL"<?php if ($row['field_probs'] == 'FINANCIAL') echo ' selected'; ?>>FINANCIAL</option>
+                   <option value="DELAYED REPAIR"<?php if ($row['field_probs'] == 'DELAYED REPAIR') echo ' selected'; ?>>DELAYED REPAIR</option>
+                    
+                </select>
+            </td>
             <label for="others_not_signing_up">OTHERS:</label>
             <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
           
-    <label for="other provider">OTHER PROVIDER</label>
-    <input type="text" name="other_prov" id="other_prov" value="<?php echo $row['other_prov']; ?>"><br>
-    <input type="submit" value="Submit">
+       
+
+           
+    
+  
+    <!-- <label for="other provider">OTHER PROVIDER</label>
+    <input type="text" id="other_prov" name="other_prov"><br>  -->
+   <input type="submit" value="Submit">
 </form>
 
 </body>

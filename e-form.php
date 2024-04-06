@@ -2,14 +2,13 @@
 session_start();
 // Database connection parameters
 require_once 'db_connection.php';
-
 // Establish database connection
 $conn = connect_db();
-
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 
 // Dummy login logic for demonstration purposes
 if (isset($_POST['logins.php'])) {
@@ -40,7 +39,6 @@ function getAgentName($user_id, $conn) {
     $row = $result->fetch_assoc();
     return $row['username'];
 }
-
 // Fetch data from the database table "field"
 $query = "SELECT problem FROM field WHERE prv_id = ?";
 $stmt = $conn->prepare($query);
@@ -52,6 +50,7 @@ $stmt->fetch();
 
 // Close the prepared statement
 $stmt->close();
+
 
 // Close the database connection
 $conn->close();
@@ -318,34 +317,7 @@ th, td {
             <th>SALES NEW</th>
             <th>SALES SWITCH</th>
         </tr>
-        <tr>
-            <td>PLDT:</td>
-            <td>
-                <select name="pldt_existing">
-                   <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-            
-            <input type="date" id="pldt_lock_date" name="pldt_lock_date"><br>
-        </td> 
-            <td>
-                <select name="pldt_sales_new">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
       
-      
-            <td>
-                <select name="pldt_sales_switch" style="display: none;">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            
-        </tr>
         
         <tr>
             <td>GLOBE:</td>
@@ -372,6 +344,7 @@ th, td {
                 </select>
             </td>
         </tr>
+        
         <tr>
             <td>CONVERGE:</td>
             <td>
@@ -399,6 +372,34 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+            <tr>
+            <td>PLDT:</td>
+            <td>
+                <select name="pldt_existing">
+                   <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+            <td>
+            
+            <input type="date" id="pldt_lock_date" name="pldt_lock_date"><br>
+        </td> 
+            <td>
+                <select name="pldt_sales_new">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+      
+      
+            <td>
+                <select name="pldt_sales_switch" style="display: none;">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+            
+        </tr>
         </tr>
         <tr style="display: none">
            <td>OTHERS:</td>
@@ -515,41 +516,15 @@ th, td {
             </td>
             <label for="others_not_signing_up">OTHERS:</label>
             <input type="text" id="others_not_signing_up" name="others_not_signing_up"oninput="this.value = this.value.toUpperCase()">
-          
-       <div class="row" style="display: none">
-            <div class="col-md-4">
-                <div class="form-group">
-               
-            <input type="checkbox" id="price" name="price" value="PRICE"> 
-            <label for="price">PRICE:</label>
-                </div>
-        </div>
-                <div class="col-md-4">
-                <div class="form-group">
-              
-            <input type="checkbox" id="satisfied" name="satisfied" value="SATISFIED"> 
-             <label for="satisfied">SATISFIED:</label>
-                </div>
-        </div>
-        <div class="col-md-4">
-                <div class="form-group">
-            
-            <input type="checkbox" id="locked_in" name= "locked_in" value="LOCKED_IN"> 
-            <label for="locked_in">LOCKED-IN:</label>
-                </div>
-        </div> 
-
-        </div>
-     
-
-
-           
-    
+      
   
     <!-- <label for="other provider">OTHER PROVIDER</label>
     <input type="text" id="other_prov" name="other_prov"><br>  -->
    <input type="submit" value="Submit">
-</form>
+   </form>
+
+</body>
+</html>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
