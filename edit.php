@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Entry</title>
     <style>
@@ -82,7 +82,7 @@ th, td {
 
         @media screen and (min-width: 600px) {
             form {
-                width: 60%;
+                width: 100%;
             }
         }
         @media (min-width: 992px) {
