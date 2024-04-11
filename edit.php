@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="android" content="width=device-width, initial-scale=1.0">
     <title>Edit Entry</title>
     <style>
   body{
@@ -82,7 +82,7 @@ th, td {
 
         @media screen and (min-width: 600px) {
             form {
-                width: 100%;
+                width: 40%;
             }
         }
         @media (min-width: 992px) {

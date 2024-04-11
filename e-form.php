@@ -60,7 +60,7 @@ $conn->close();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="android" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CALL - SLIP ENTRIES</title>
     <link rel="stylesheet" href="styles.css">
@@ -149,7 +149,7 @@ $conn->close();
         border-radius: .2rem;
     }
 
-label, input[type="text"], input[type="date"], select, input[type="number"] {
+label, input[type="text"], input[type=""], select, input[type="number"] {
     display: block;
     margin: 10px 0;
     width: 100%; /* Full width */
@@ -194,7 +194,7 @@ table {
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     padding: 8px;
     text-align: left;
 }
@@ -313,12 +313,39 @@ th, td {
         <tr>
             <th></th>
             <th>EXISTING</th>
-            <th>LOCK IN</th>
+            <th>LOCK IN DATE</th>
             <th>SALES NEW</th>
             <th>SALES SWITCH</th>
         </tr>
       
-        
+        <tr>
+            <td>PLDT:</td>
+            <td>
+                <select name="pldt_existing">
+                   <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+            <td>
+            
+            <input type="date" id="pldt_lock_date" name="pldt_lock_date"><br>
+        </td> 
+            <td>
+                <select name="pldt_sales_new">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+      
+      
+            <td style="display: none;">
+                <select name="pldt_sales_switch">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+            
+        </tr>
         <tr>
             <td>GLOBE:</td>
             <td>
@@ -372,34 +399,7 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
-            <tr>
-            <td>PLDT:</td>
-            <td>
-                <select name="pldt_existing">
-                   <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-            
-            <input type="date" id="pldt_lock_date" name="pldt_lock_date"><br>
-        </td> 
-            <td>
-                <select name="pldt_sales_new">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-      
-      
-            <td>
-                <select name="pldt_sales_switch" style="display: none;">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            
-        </tr>
+          
         </tr>
         <tr style="display: none">
            <td>OTHERS:</td>
@@ -424,31 +424,34 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+            <tr>
+
+<th rowspan="1">OTHER PROVIDER</th>
+<td>
+<label for="other_provider"></label>
+<input type="text" id="other_prov" name="other_prov"><br>
+</td> 
+<td>
+
+<input type="date" id="globe_lock_date" name="globe_lock_date"><br>
+</td> 
+<td>
+    <select name="pldt_sales_new">
+       
+        <option value="No">No</option>
+         <option value="Yes">Yes</option>
+    </select>
+</td>
+
+<td>
+    <select name="sales_switch">
+       
+        <option value="No">No</option>
+         <option value="Yes">Yes</option>
+    </select>
+</td>
+</tr>
         </tr> 
-        <tr>
-            <td>NO PROVIDERS:</td>
-            <td>
-                <select name="no_providers_existing">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="no_providers_sales_new">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="no_providers_sales_switch">
-                    
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-        </tr>
         <tr>
             <td>UNENGAGED:</td>
             <td>
@@ -458,14 +461,18 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
-            <td>
-                <select name="unengaged_sales_new">
+            <td style="display: none;">
+            
+            <input type="date" id="globe_lock_date" name="globe_lock_date"><br>
+        </td> 
+            <td style="display: none;">
+                <select name="unengaged_sales_new" >
                    
                     <option value="No">No</option>
                      <option value="Yes">Yes</option>
                 </select>
             </td>
-            <td>
+            <td style="display: none;">
                 <select name="unengaged_sales_switch">
                    
                     <option value="No">No</option>
@@ -474,28 +481,39 @@ th, td {
             </td>
              </tr>
       
-           <tr>
-
-            <th rowspan="2">OTHER PROVIDER</th>
-        <td>
-            <label for="other_provider"></label>
-            <input type="text" id="other_prov" name="other_prov"><br>
-        </td> 
-        <td>
-                <select name="pldt_sales_new">
-                   
-                    <option value="No">No</option>
-                     <option value="Yes">Yes</option>
-                </select>
-            </td>
+        
+        <tr>
+            <td>NO PROVIDERS:</td>
             <td>
-                <select name="sales_switch">
+                <select name="no_providers_existing">
                    
                     <option value="No">No</option>
                      <option value="Yes">Yes</option>
                 </select>
             </td>
+            <td style="display: none;">
+            
+            <input type="date" id="globe_lock_date" name="globe_lock_date"><br>
+        </td> 
+           
+            <td style="display: none;">
+                <select name="no_providers_sales_new">
+                   
+                    <option value="No">No</option>
+                     <option value="Yes">Yes</option>
+                </select>
+            </td>
+            <td style="display: none;">
+                <select name="no_providers_sales_switch">
+                    
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </td>
+           
         </tr>
+        
+        
     </table>
     
         </div>

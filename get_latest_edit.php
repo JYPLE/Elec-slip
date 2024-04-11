@@ -19,6 +19,7 @@ if ($result && $result->num_rows > 0) {
     // Fetch the latest edited entry details
     $entry = $result->fetch_assoc();
     // Return JSON response
+    
     echo json_encode($entry);
 } else {
     // No entry found with the given ID

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="android" content="width=device-width, initial-scale=1.0">
 <title>Fixed Side Nav and Top Navbar with Search</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
@@ -14,7 +14,7 @@
 <style>
     /* Adjusting padding to make space for fixed top navbar */
     body {
-        padding-top: 70px;
+        padding-top: 100px;
         background-color: #800000;
     }
 
@@ -28,14 +28,15 @@
 
     /* Fixed side navbar */
     .sidenav {
-        height: 100%;
+        height: 95%;
         width: 200px;
         position: fixed;
         z-index: 1031;
-        top: 56px; /* Height of top navbar */
+        top: 102px; /* Height of top navbar */
         left: 0;
         background-color: green;
         padding-top: 20px;
+       
     }
 
     /* Style for links in the side navbar */
@@ -45,18 +46,19 @@
         font-size: 18px;
         color: white;
         display: block;
+        
     }
 
     /* Style for active link in the side navbar */
     .sidenav a.active {
         background-color: #007bff;
-        color: #fff;
+        color: white;
     }
 
     /* Add padding to the main content area to prevent content from being hidden under the fixed side navbar */
     .main-content {
         margin-left: 250px; /* Width of the side navbar */
-        padding: 20px;
+        padding: 10px;
     }
     .scrollable-div {
             overflow-x: auto;
@@ -130,7 +132,7 @@
 /* Style for logout link */
 .sidenav .logout {
   position: absolute;
-  bottom: 50px;
+  bottom: 60px;
   left: 5px;
 }
 
@@ -165,7 +167,7 @@ if ($conn->connect_error) {
         <!-- Search Form -->
         <form class="form-inline my-2 my-lg-0">
             <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." >
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search..." style="margin-right: 150px;">
             <!-- <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button> -->
         </form>
     </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="android" content="width=device-width, initial-scale=1.0">
 <title>Fixed Side Nav and Top Navbar with Search</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
@@ -134,7 +134,9 @@ td {
             <!-- <li class="nav-item active">
                 <a class="nav-link" href="#">ADD FORM <i class="fas fa-plus"></i></a>
             </li> -->
-         
+            <li class="nav-item">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="button" data-toggle="modal" data-target="#editHistoryModal">History</button>
+            </li>
         </ul>
         <!-- Search Form -->
         <form class="form-inline my-2 my-lg-0">
@@ -144,6 +146,90 @@ td {
         </form>
     </div>
 </nav>
+<!-- Edit History Modal -->
+
+<div class="modal fade" id="editHistoryModal" tabindex="-1" role="dialog" aria-labelledby="editHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editHistoryModalLabel">Edit History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <?php
+// Database connection parameters
+$servername = "localhost";
+$username = "root"; // Replace with your MySQL username
+$password = ""; // Replace with your MySQL password
+$database = "eslip";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch the last edit of the name column
+$lastEditNameQuery = "SELECT name FROM slip_entry ORDER BY id DESC LIMIT 1";
+$lastEditNameResult = $conn->query($lastEditNameQuery);
+
+if ($lastEditNameResult->num_rows > 0) {
+    // Output data of the last edit of the name column
+    $lastEditName = $lastEditNameResult->fetch_assoc();
+    ?>
+    <h3>Last Edited Name: </h3>
+    <p>Added by: <?php echo $lastEditName['name']; ?></p>
+    <?php
+} else {
+    // If no entries found
+   
+    ?>
+    <h3>No entries found.</h3>
+    <?php
+}
+
+// Close connection
+$conn->close();
+?>
+
+
+            </div>
+                <div id="editHistoryContent">
+                    <!-- This div will be populated with data from AJAX -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- Add additional buttons or actions if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to update edit history content
+    function updateEditHistory() {
+        // Make AJAX request to fetch latest edit
+        $.ajax({
+            url: 'get_latest_edit.php', // Change the URL to your PHP script for fetching the last edit
+            type: ( "GET")
+            success: function(response) {
+                // Update the content of edit history modal with response
+                $('#editHistoryContent').html(response);
+            }
+        });
+    }
+
+    // Call updateEditHistory function when modal is shown
+    $('#editHistoryModal').on('shown.bs.modal', function(e) {
+        updateEditHistory();
+    });
+</script>
+
 
 <!-- Side Navbar -->
 <div class="sidenav">
@@ -174,6 +260,7 @@ td {
    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Contact Number</th>
    <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>NAP</th> -->
    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>AGENT</th>
+   <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Last Edit</th>
   
             </tr>
         </thead>
@@ -239,7 +326,7 @@ td {
                     echo "<td>" . htmlspecialchars($row["contact_number"]) . "</td>";
                     // echo "<td>" . htmlspecialchars($row["nap"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
-                
+                    echo "<td><button onclick='editEntry(" . $row['id'] . ")'>Edit</button></td>";
                     echo "</tr>";
                 }
             } else {
@@ -251,6 +338,59 @@ $conn->close();
 </div>
 
 <!-- JavaScript for sidebar functionality -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modalContent"></p>
+    </div>
+</div>
+
+<script>
+    function editEntry(id) {
+        // AJAX request to fetch latest edited entry details
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Parse response JSON
+                var entry = JSON.parse(this.responseText);
+                // Display the latest edited entry details in modal
+                var modalContent = "<br>";
+                if (entry.agent) {
+                    modalContent += "Agent: " + entry.agent + "<br>";
+                }
+                if (entry.name) {
+                    modalContent += "Name: " + entry.name + "<br>";
+                }
+
+            
+                document.getElementById("modalContent").innerHTML = modalContent;
+                // Show the modal
+                document.getElementById('myModal').style.display = "block";
+            } else {
+                // If not edited, do not show the modal
+                console.log("Entry not edited.");
+            }
+        };
+        xhttp.open("GET", "get_latest_edit.php?id=" + id, true);
+        xhttp.send();
+    }
+
+    // Close the modal when the close button is clicked
+    document.getElementsByClassName("close")[0].onclick = function() {
+        document.getElementById('myModal').style.display = "none";
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('myModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+
 <script>
 
     function filterTable() {
