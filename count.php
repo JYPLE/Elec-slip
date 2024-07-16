@@ -87,7 +87,7 @@ th {
 }
 
 .table-container {
-            max-height: 400px; /* Adjust the max height as needed */
+            max-height: 400px;
             overflow-y: auto;
         }
         .fixed-header-table thead {
@@ -101,6 +101,7 @@ body{
     </style>
 </head>
 <body>
+<h1 style=color:white;text-align:center;font-style:bold;>Count</h1> 
 <a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 200px;">
     <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back
 </a>
@@ -129,24 +130,23 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
 // Filter entries based on the date range
 $sql = "SELECT 
-            agent, 
-            COUNT(*) AS entry_count, entry_date,
-            SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
-            SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
-            SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
-            SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
-            SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
-            SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
-            SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
-            SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
-            SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
-            SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count,
-            SUM(CASE WHEN satisfied = 'SATISFIED' THEN 1 ELSE 0 END) AS satisfied_count,
-            SUM(CASE WHEN locked_in = 'LOCKED_IN' THEN 1 ELSE 0 END) AS locked_in_count,
-            SUM(CASE WHEN price = 'PRICE' THEN 1 ELSE 0 END) AS price_count
-        FROM slip_entry 
-        WHERE entry_date BETWEEN '$date_from' AND '$date_to'
-        GROUP BY agent";
+agent, 
+COUNT(*) AS entry_count, 
+entry_date,
+SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
+SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
+SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
+SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
+SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
+SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
+SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
+SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
+SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
+SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count
+FROM slip_entry 
+WHERE entry_date BETWEEN '$date_from' AND '$date_to'
+GROUP BY agent";
+
 
 $result = $conn->query($sql);
 
@@ -154,6 +154,7 @@ if ($result && $result->num_rows > 0) {
     
     echo "<table class='scrollable-table'>";
     echo "<thead><tr>";
+   
         
     // Header for "Agent"
     echo "<th rowspan='2'>Agent</th>";
@@ -177,14 +178,10 @@ if ($result && $result->num_rows > 0) {
     echo "<th colspan='2'>Converge Existing</th>";
     echo "<th colspan='2'>No Providers Existing</th>";
     echo "<th colspan='2'>Unengaged Existing</th>";
-   
     echo "</tr>";
         
     // Second row of headers
     echo "<tr>";
-    echo "<th>Price</th>";
-    echo "<th>SATISFIED</th>";
-    echo "<th>LOCK IN</th>";
     echo "<th>Yes</th>";
     echo "<th>No</th>";
     echo "<th>Yes</th>";
@@ -195,7 +192,9 @@ if ($result && $result->num_rows > 0) {
     echo "<th>No</th>";
     echo "<th>Yes</th>";
     echo "<th>No</th>";
-   
+    echo "<th>Yes</th>";
+    echo "<th>No</th>";
+    echo "<th>Yes</th>";
     echo "</tr></thead>";
         
     echo "<tbody>";
@@ -206,13 +205,6 @@ if ($result && $result->num_rows > 0) {
         // Display "count" column
         echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
-        // Display "Price" column
-        echo "<td>" . htmlspecialchars($row["price_count"]) . "</td>";
-      
-        // Display "SATISFIED" column
-        echo "<td>" . htmlspecialchars($row["satisfied_count"]) . "</td>";
-        // Display "LOCK IN" column
-        echo "<td>" . htmlspecialchars($row["locked_in_count"]) . "</td>";
         // Display the rest of the columns
         echo "<td>" . htmlspecialchars($row["pldt_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["pldt_no_count"]) . "</td>";

@@ -102,6 +102,7 @@ body{
     </style>
 </head>
 <body>
+<h1 style=color:white;text-align:center;font-style:bold;>Count Switch</h1> 
 <a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 200px;">
     <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back
 </a>
@@ -153,7 +154,7 @@ if ($result && $result->num_rows > 0) {
     
     echo "<table class='scrollable-table'>";
     echo "<thead><tr>";
-    echo "<h1 style=color:white;text-align:center; text-style:bold;>Sales Switch</h1>";
+  
     // Header for "Agent"
     echo "<th rowspan='2'>Barangay</th>";
   

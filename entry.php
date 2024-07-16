@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="android" content="width=device-width, initial-scale=1.0">
-<title>Fixed Side Nav and Top Navbar with Search</title>
+<title>Call slip</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -134,9 +134,9 @@ td {
             <!-- <li class="nav-item active">
                 <a class="nav-link" href="#">ADD FORM <i class="fas fa-plus"></i></a>
             </li> -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <button class="btn btn-outline-light my-2 my-sm-0" type="button" data-toggle="modal" data-target="#editHistoryModal">History</button>
-            </li>
+            </li> -->
         </ul>
         <!-- Search Form -->
         <form class="form-inline my-2 my-lg-0">
@@ -238,7 +238,7 @@ $conn->close();
  <a href="count_existing.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Existing</a>
  <a href="count_sales.php" class="agentEntry"><i class="fas fa-chart-bar"></i>New Sales</a>
  <a href="count_switch.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Sales Switch</a>
- <a href="" class="agentEntry"><i class="fas fa-chart-bar"></i>Field Problem</a>
+ <!-- <a href="" class="agentEntry"><i class="fas fa-chart-bar"></i>Field Problem</a> -->
  <a href="download.php" class="agentEntry"><i class="fas fa-file-export"></i>Export Excel</a>
 
  <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -260,7 +260,7 @@ $conn->close();
    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Contact Number</th>
    <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>NAP</th> -->
    <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>AGENT</th>
-   <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Last Edit</th>
+   <!-- <th style='background-color: green; border: 1px solid #ddd; padding: 4px; text-align: center;'>Last Edit</th> -->
   
             </tr>
         </thead>
@@ -326,7 +326,7 @@ $conn->close();
                     echo "<td>" . htmlspecialchars($row["contact_number"]) . "</td>";
                     // echo "<td>" . htmlspecialchars($row["nap"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
-                    echo "<td><button onclick='editEntry(" . $row['id'] . ")'>Edit</button></td>";
+                    // echo "<td><button onclick='editEntry(" . $row['id'] . ")'>Edit</button></td>";
                     echo "</tr>";
                 }
             } else {

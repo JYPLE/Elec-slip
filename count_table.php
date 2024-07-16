@@ -99,10 +99,9 @@ th {
     </form> -->
 
     <?php
-    // Establish connection to the database
+  
     $conn = new mysqli("localhost", "root", "", "eslip");
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -114,12 +113,9 @@ th {
     // Retrieve the barangay information from the URL
     $barangay = isset($_GET['barangay']) ? urldecode($_GET['barangay']) : '';
 
-
-
-    // Establish connection to the database
     $conn = new mysqli("localhost", "root", "", "eslip");
     
-    // Check connection
+   
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }

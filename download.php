@@ -178,9 +178,7 @@
     <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  UNENGAGED SALES NEW</th>
     <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>  UNENGAGED SALES SWITCH</th>
   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>OTHER PROVIDER</th>
- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> PRICE</th>
- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>SATISFIED</th>
- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'> LOCKED-IN</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>NOT SIGNING IN</th>
 <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>OTHERS</th>
 <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>ACTION</th> -->
 <!-- <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 8px; text-align: center;'>USER</th>"; -->
@@ -190,7 +188,7 @@
             <?php
             $conn = new mysqli("localhost", "root", "", "eslip");
 
-            // Check connection
+            
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
@@ -266,9 +264,7 @@
                     echo "<td>" . htmlspecialchars($row["unengaged_sales_new"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["unengaged_sales_switch"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["other_prov"]) . "</td>";
-                    echo "<td>" . htmlspecialchars($row["price"]) . "</td>";
-                    echo "<td>" . htmlspecialchars($row["satisfied"]) . "</td>";
-                    echo "<td>" . htmlspecialchars($row["locked_in"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["field_probs"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["others_not_signing_up"]) . "</td>";
                     // echo "<td><button onclick='viewEntry(" . $row['id'] . ")'>View</button></td>";
                     // echo "<td>" . htmlspecialchars($row["user_id"]) . "</td>";

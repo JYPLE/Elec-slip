@@ -399,44 +399,20 @@ th, td {
                     <option value="Yes">Yes</option>
                 </select>
             </td>
+            
           
         </tr>
-        <tr style="display: none">
-           <td>OTHERS:</td>
-            <td>
-                <select name="others_existing">
-                    
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="others_sales_new">
-                   
-                    <option value="No">No</option> 
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <td>
-                <select name="others_sales_switch">
-                   
-                    <option value="No">No</option> 
-                    <option value="Yes">Yes</option>
-                </select>
-            </td>
-            <tr>
-
-<th rowspan="1">OTHER PROVIDER</th>
+        <th rowspan="1">OTHER PROVIDER</th>
 <td>
 <label for="other_provider"></label>
 <input type="text" id="other_prov" name="other_prov"><br>
 </td> 
 <td>
 
-<input type="date" id="globe_lock_date" name="globe_lock_date"><br>
+<input type="date" id="other_lock_date" name="other_lock_date"><br>
 </td> 
 <td>
-    <select name="pldt_sales_new">
+    <select name="other_sales_new">
        
         <option value="No">No</option>
          <option value="Yes">Yes</option>
@@ -444,13 +420,15 @@ th, td {
 </td>
 
 <td>
-    <select name="sales_switch">
+    <select name="other_sales_switch">
        
         <option value="No">No</option>
          <option value="Yes">Yes</option>
     </select>
 </td>
 </tr>
+       
+
         </tr> 
         <tr>
             <td>UNENGAGED:</td>
@@ -463,7 +441,7 @@ th, td {
             </td>
             <td style="display: none;">
             
-            <input type="date" id="globe_lock_date" name="globe_lock_date"><br>
+            <input type="date" id="" name=""><br>
         </td> 
             <td style="display: none;">
                 <select name="unengaged_sales_new" >
@@ -493,7 +471,7 @@ th, td {
             </td>
             <td style="display: none;">
             
-            <input type="date" id="globe_lock_date" name="globe_lock_date"><br>
+            <input type="date" id="" name=""><br>
         </td> 
            
             <td style="display: none;">
@@ -594,25 +572,89 @@ function closeNav() {
                 appCache.update();
             }
         </script>
-<!-- <script>
-    // Function to open Google Maps with provided longitude and latitude
-    function openGoogleMaps() {
-        var longitude = document.getElementById("longitude").value;
-        var latitude = document.getElementById("latitude").value;
+         <!--script>
+        // Function to open Google Maps with provided longitude and latitude
+        function openGoogleMaps() {
+            var longitude = document.getElementById("longitude").value;
+            var latitude = document.getElementById("latitude").value;
 
-        // Construct Google Maps URL with the coordinates
-        var mapsURL = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
+            // Construct Google Maps URL with the coordinates
+            var mapsURL = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
 
-        // Open Google Maps in a new tab
-        window.open(mapsURL, "_blank");
-    }
+            // Open Google Maps in a new tab
+            window.open(mapsURL, "_blank");
+        }
 
-    // Add event listener to the "View Location" button
-    document.getElementById("getLocationBtn").addEventListener("click", function() {
-        openGoogleMaps();
-    });
-</script> -->
-<script>
+        // Function to get the current position
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Populate the input fields with the current position
+                    document.getElementById("latitude").value = latitude;
+                    document.getElementById("longitude").value = longitude;
+
+                    // Automatically open Google Maps with the current location
+                    openGoogleMaps();
+                }, function(error) {
+                    console.error("Error getting location: " + error.message);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Get the current location when the page loads
+        window.onload = function() {
+            getCurrentLocation();
+        };
+    </script-->
+  <!--script>
+        // Function to get current location and populate longitude and latitude fields
+        function getCurrentLocation() {
+            // Check if Geolocation is supported
+            if ("geolocation" in navigator) {
+                // Show a loading message
+                document.getElementById("getLocationBtn").textContent = "Getting Location...";
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // Populate longitude and latitude fields with current position
+                    document.getElementById("longitude").value = position.coords.longitude;
+                    document.getElementById("latitude").value = position.coords.latitude;
+                    // Restore button text
+                    document.getElementById("getLocationBtn").textContent = "Get Current Location";
+                }, function(error) {
+                    // Handle possible errors
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            alert("User denied the request for Geolocation.");
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            alert("Location information is unavailable.");
+                            break;
+                        case error.TIMEOUT:
+                            alert("The request to get user location timed out.");
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            alert("An unknown error occurred.");
+                            break;
+                    }
+                    // Restore button text
+                    document.getElementById("getLocationBtn").textContent = "Get Current Location";
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+
+        // Add event listener to the "Get Current Location" button
+        document.getElementById("getLocationBtn").addEventListener("click", function() {
+            getCurrentLocation();
+        });
+    </script--> 
+
+ <script>
     // Function to get current location and populate longitude and latitude fields
     function getCurrentLocation() {
         // Check if Geolocation is supported
@@ -631,7 +673,7 @@ function closeNav() {
     document.getElementById("getLocationBtn").addEventListener("click", function() {
         getCurrentLocation();
     });
-</script>
+</script> 
 <script>
     // Get today's date
     var today = new Date();

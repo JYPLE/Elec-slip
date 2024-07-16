@@ -128,32 +128,31 @@ if ($conn->connect_error) {
 $date_from = isset($_POST['date_from']) ? $_POST['date_from'] : date('Y-m-d');
 $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
-// Filter entries based on the date range
-$sql = "SELECT 
-            barangay, entry_date,
-            COUNT(*) AS entry_count,
-            SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
-            SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
-            SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
-            SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
-            SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
-            SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
-            SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
-            SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
-            SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
-            SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count,
-            SUM(CASE WHEN satisfied = 'Yes' THEN 1 ELSE 0 END) AS satisfied_count
-           
-        FROM slip_entry 
-        WHERE entry_date BETWEEN '$date_from' AND '$date_to'
-        GROUP BY barangay, entry_date";
-
-$result = $conn->query($sql);
-
-if ($result && $result->num_rows > 0) {
+ // Prepare and execute SQL query
+ $sql = "SELECT 
+ barangay, entry_date,
+ COUNT(*) AS entry_count,
+ SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
+ SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
+ SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
+ SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
+ SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
+ SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
+ SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
+ SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
+ SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
+ SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count
+FROM slip_entry 
+WHERE entry_date BETWEEN ? AND ?
+GROUP BY barangay, entry_date";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("ss", $date_from, $date_to);
+  $stmt->execute();
+  $result = $stmt->get_result();
     
     echo "<table class='scrollable-table'>";
     echo "<thead><tr>";
+  
         
     // Header for "Agent"
     echo "<th rowspan='2'>Barangay</th>";
@@ -214,7 +213,7 @@ if ($result && $result->num_rows > 0) {
     }
     echo "</tbody>";
     echo "</table>";
-}
+
 // Closing braces for PHP code
 $conn->close();
 ?>

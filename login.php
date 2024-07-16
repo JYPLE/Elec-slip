@@ -1,16 +1,14 @@
 <?php
 session_start();
 
-require_once 'db_connection.php'; // Include database connection file
+require_once 'db_connection.php'; 
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = connect_db(); // Connect to the database
-
+    $conn = connect_db();
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Prepare and bind SQL statement to fetch user data
+    
     $stmt = $conn->prepare("SELECT * FROM user WHERE username=?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -36,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "User not found";
     }
 
-    // Close statement and connection
+    
     $stmt->close();
     $conn->close();
 }
 
-// Display login form or error message
+
 ?>
