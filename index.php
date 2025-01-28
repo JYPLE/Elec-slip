@@ -73,7 +73,7 @@
             echo '<input type="text" id="agent" name="agent" value="' . $_SESSION['userdata']['username'] . '" readonly><br>';
         } 
         ?>
-        <input type="submit" value="logins">
+        <input type="submit" value="login">
     </form>
 </body>
 </html>
