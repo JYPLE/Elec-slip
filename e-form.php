@@ -51,9 +51,53 @@ $stmt->fetch();
 // Close the prepared statement
 $stmt->close();
 
+// Handle image upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    // Get image details
+    $imageTmpPath = $_FILES['image']['tmp_name'];
+    $imageName = $_FILES['image']['name'];
+    $imageExtension = pathinfo($imageName, PATHINFO_EXTENSION);
 
-// Close the database connection
-$conn->close();
+    // Define the allowed file extensions
+    $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
+
+    // Check if the file extension is allowed
+    if (in_array($imageExtension, $allowedExtensions)) {
+        // Define the upload directory
+        $uploadDir = __DIR__ . '/uploads/';
+        // Create the upload directory if it doesn't exist
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Generate a unique name for the image
+        $newImageName = uniqid() . '.' . $imageExtension;
+        $uploadFilePath = $uploadDir . $newImageName;
+
+        // Move the uploaded file to the upload directory
+        if (move_uploaded_file($imageTmpPath, $uploadFilePath)) {
+            // Prepare the SQL query to insert the image name into the database
+            $stmt = $conn->prepare("INSERT INTO slip_entry (image_name) VALUES (?)");
+            $stmt->bind_param("s", $newImageName);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                echo "Image uploaded and saved to database successfully.";
+            } else {
+                echo "Failed to save image to database: " . $stmt->error;
+            }
+
+            // Close the statement
+            $stmt->close();
+        } else {
+            echo "Failed to move uploaded file.";
+        }
+    } else {
+        echo "Invalid file extension.";
+    }
+} else {
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -237,9 +281,9 @@ th, td {
 </div>
 <div id="main">
     <span style="color: white; font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
-<h2>CALL - SLIP ENTRIES</h2>
+<h2>CALLS-SLIP FORM</h2>
 
-<form action="submit_form.php" method="post">
+<form action="submit_form.php" method="post" enctype="multipart/form-data">
     <div class="container">
         <?php if (isset($_SESSION['userdata']) && $_SESSION['userdata']['user_role'] == "agent") : ?>
             <div class="form-group">
@@ -264,31 +308,34 @@ th, td {
                     <label for="name">FULL NAME:</label>
                     <input type="text" id="name" name="name" oninput="this.value = this.value.toUpperCase()">
                 </div>
+               
                 <div class="form-group">
-                    <label for="zone">ZONE:</label>
-                    <input type="text" id="zone" name="zone"oninput="this.value = this.value.toUpperCase()">
-                </div>
-                <div class="form-group">
-                    <label for="barangay">BARANGAY:</label>
-                    <input type="text" id="barangay" name="barangay"oninput="this.value = this.value.toUpperCase()">
+                <label for="province">PROVINCE:</label>
+                    <input type="text" id="province" name="province"oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <div class="form-group">
                     <label for="city">MUNICIPALITY/CITY:</label>
                     <input type="text" id="city" name="city"oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <div class="form-group">
-                    <label for="province">PROVINCE:</label>
-                    <input type="text" id="province" name="province"oninput="this.value = this.value.toUpperCase()">
+                <label for="barangay">BARANGAY:</label>
+                <input type="text" id="barangay" name="barangay"oninput="this.value = this.value.toUpperCase()">
+                </div>
+                <div class="form-group">
+                    <label for="zone">ZONE:</label>
+                    <input type="text" id="zone" name="zone"oninput="this.value = this.value.toUpperCase()">
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label for="lcp">LCP:</label>
-                    <input type="text" id="lcp" name="lcp"oninput="this.value = this.value.toUpperCase()">
+                    <input type="text" id="lcp" name="lcp" oninput="this.value = this.value.toUpperCase()">
                 </div>
+
+             
                 <div class="form-group">
                     <label for="nap">NAP:</label>
-                    <input type="text" id="nap" name="nap"oninput="this.value = this.value.toUpperCase()">
+                    <input type="file" id="nap" name="nap" accept="image/*">
                 </div>
 
                 <div class="form-group">
@@ -296,6 +343,8 @@ th, td {
                     <input type="number" id="contact_number" name="contact_number">
                 </div>
                
+            
+
                 <div class="form-group">
                     <button type="button" id="getLocationBtn" class="btn btn-success">Get Current Location</button>
                 </div>
@@ -307,7 +356,12 @@ th, td {
                     <label for="latitude">Latitude:</label>
                     <input type="number" id="latitude" name="latitude" step="any">
                 </div>
+                <div class="form-group">
+                    <label for="image">ATTACHED HOUSE PICTURE:</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
             </div>
+            
             <br>
             <table>
         <tr>
@@ -322,7 +376,8 @@ th, td {
             <td>PLDT:</td>
             <td>
                 <select name="pldt_existing">
-                   <option value="No">No</option>
+                    <option value=""></option>
+                    <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
             </td>
@@ -332,6 +387,7 @@ th, td {
         </td> 
             <td>
                 <select name="pldt_sales_new">
+                    <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -340,6 +396,7 @@ th, td {
       
             <td style="display: none;">
                 <select name="pldt_sales_switch">
+                     <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -350,6 +407,7 @@ th, td {
             <td>GLOBE:</td>
             <td>
                 <select name="globe_existing">
+                <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -360,12 +418,14 @@ th, td {
         </td> 
             <td>
                 <select name="globe_sales_new">
+                <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
             </td>
             <td>
                 <select name="globe_sales_switch">
+                <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -376,7 +436,7 @@ th, td {
             <td>CONVERGE:</td>
             <td>
                 <select name="converge_existing">
-                    
+                <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -387,14 +447,14 @@ th, td {
         </td> 
             <td>
                 <select name="converge_sales_new">
-                   
+                <option value=""></option>
                     <option value="No">No</option> 
                     <option value="Yes">Yes</option>
                 </select>
             </td>
             <td>
                 <select name="converge_sales_switch">
-                   
+                <option value=""></option>
                     <option value="No">No</option> 
                     <option value="Yes">Yes</option>
                 </select>
@@ -413,7 +473,7 @@ th, td {
 </td> 
 <td>
     <select name="other_sales_new">
-       
+    <option value=""></option>
         <option value="No">No</option>
          <option value="Yes">Yes</option>
     </select>
@@ -421,7 +481,7 @@ th, td {
 
 <td>
     <select name="other_sales_switch">
-       
+    <option value=""></option>
         <option value="No">No</option>
          <option value="Yes">Yes</option>
     </select>
@@ -434,7 +494,7 @@ th, td {
             <td>UNENGAGED:</td>
             <td>
                 <select name="unengaged_existing">
-                    
+                <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -445,14 +505,14 @@ th, td {
         </td> 
             <td style="display: none;">
                 <select name="unengaged_sales_new" >
-                   
+                <option value=""></option>
                     <option value="No">No</option>
                      <option value="Yes">Yes</option>
                 </select>
             </td>
             <td style="display: none;">
                 <select name="unengaged_sales_switch">
-                   
+                <option value=""></option>
                     <option value="No">No</option>
                      <option value="Yes">Yes</option>
                 </select>
@@ -464,7 +524,7 @@ th, td {
             <td>NO PROVIDERS:</td>
             <td>
                 <select name="no_providers_existing">
-                   
+                <option value=""></option>
                     <option value="No">No</option>
                      <option value="Yes">Yes</option>
                 </select>
@@ -476,14 +536,14 @@ th, td {
            
             <td style="display: none;">
                 <select name="no_providers_sales_new">
-                   
+                <option value=""></option>
                     <option value="No">No</option>
                      <option value="Yes">Yes</option>
                 </select>
             </td>
             <td style="display: none;">
                 <select name="no_providers_sales_switch">
-                    
+                <option value=""></option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -502,7 +562,7 @@ th, td {
             <td>
            
                 <select name="field_probs">
-                    
+                    <option value=""></option>
                     <option value="LOCKED IN">LOCKED IN</option>
                     <option value="PRICE">PRICE</option>
                     <option value="SATISFIED">SATISFIED</option>
@@ -692,3 +752,15 @@ function closeNav() {
 </body>
 </html>
 
+<!-- // Add offline support using a service worker -->
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+        navigator.serviceWorker.register("service-worker.js").then(function(registration) {
+            console.log("ServiceWorker registration successful with scope: ", registration.scope);
+        }, function(err) {
+            console.log(" ", err);
+        });
+    });
+}
+</script>

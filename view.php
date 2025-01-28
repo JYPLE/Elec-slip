@@ -79,9 +79,28 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>BARANGAY:</td><td><input type="text" value="<?php echo $row["barangay"]; ?>" disabled></td></tr>
                 <tr><td>CITY:</td><td><input type="text" value="<?php echo $row["city"]; ?>" disabled></td></tr>
                 <tr><td>PROVINCE:</td><td><input type="text" value="<?php echo $row["province"]; ?>" disabled></td></tr>
-                <tr><td>LCP:</td><td><input type="text" value="<?php echo $row["lcp"]; ?>" disabled></td></tr>
+                <!-- <tr><td>LCP:</td><td><input type="text" value="<?php echo $row["lcp"]; ?>" disabled></td></tr> -->
                 <tr><td>CONTACT NUMBER:</td><td><input type="number" value="<?php echo $row["contact_number"]; ?>" disabled></td></tr>
-                <tr><td>NAP:</td><td><input type="text" value="<?php echo $row["nap"]; ?>" disabled></td></tr>
+                <tr><td>NAP:</td><td><img id="napImage" src="<?php echo $row['nap']; ?>" alt="NAP Image" style="max-width: 100%; height: auto; cursor: zoom-in;"></td></tr>
+                <tr><td colspan="2"><button id="downloadNapButton">Download NAP Image</button></td></tr>
+                <script>
+                    document.getElementById('napImage').addEventListener('click', function() {
+                        if (this.style.transform === 'scale(2)') {
+                            this.style.transform = 'scale(1)';
+                            this.style.cursor = 'zoom-in';
+                        } else {
+                            this.style.transform = 'scale(2)';
+                            this.style.cursor = 'zoom-out';
+                        }
+                    });
+
+                    document.getElementById('downloadNapButton').addEventListener('click', function() {
+                        const link = document.createElement('a');
+                        link.href = document.getElementById('napImage').src;
+                        link.download = 'nap_image.jpg';
+                        link.click();
+                    });
+                </script>
                 <tr><td>LONGITUDE:</td><td><input type="number" value="<?php echo $row["longitude"]; ?>" disabled></td></tr>
                 <tr><td>LATITUDE:</td><td><input type="number" value="<?php echo $row["latitude"]; ?>" disabled></td></tr>
                 <tr><td>PLDT EXISTING:</td><td><input type="text" value="<?php echo $row["pldt_existing"]; ?>" disabled></td></tr>
@@ -104,6 +123,27 @@ if ($result && $result->num_rows > 0) {
                 <tr><td>UNENGAGED:</td><td><input type="text" value="<?php echo $row["unengaged_existing"]; ?>" disabled></td></tr>
                 <tr><td>NOT SIGNING IN:</td><td><input type="text" value="<?php echo $row["field_probs"]; ?>" disabled></td></tr>
                 <tr><td>OTHERS:</td><td><input type="text" value="<?php echo $row["others_not_signing_up"]; ?>" disabled></td></tr>
+                <tr><td>IMAGE:</td><td><img id="entryImage" src="<?php echo $row['image']; ?>" alt="Entry Image" style="max-width: 100%; height: auto; cursor: zoom-in;"></td></tr>
+                <tr><td colspan="2"><button id="downloadButton">Download Image</button></td></tr>
+                <script>
+                    document.getElementById('entryImage').addEventListener('click', function() {
+                        if (this.style.transform === 'scale(2)') {
+                            this.style.transform = 'scale(1)';
+                            this.style.cursor = 'zoom-in';
+                        } else {
+                            this.style.transform = 'scale(2)';
+                            this.style.cursor = 'zoom-out';
+                        }
+                    });
+
+                    document.getElementById('downloadButton').addEventListener('click', function() {
+                        const link = document.createElement('a');
+                        link.href = document.getElementById('entryImage').src;
+                        link.download = 'entry_image.jpg';
+                        link.click();
+                    });
+                </script>
+
                 <!-- Add other fields here with similar pattern -->
             </table>
         </div>

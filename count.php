@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>CALL - SLIP ENTRIES</title>
     <style>
-
-
-#main {
+        #main {
             transition: margin-left .5s;
             padding: 16px;
         }
@@ -21,89 +19,144 @@
             margin-top: 20px;
         }
 
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #a8e4a0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #800000;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: black;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidenav .logout {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+        /* Style for logout link */
+.sidenav .logout {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+}
         form {
-    width: 40%;
-    margin: 0 auto;
-}
-.form-control-sm {
-        height: calc(1.5em + .5rem + 2px);
-        padding: .25rem .5rem;
-        font-size: .875rem;
-        line-height: 1.5;
-        border-radius: .2rem;
-    }
+            width: 40%;
+            margin: 0 auto;
+        }
 
-label, input[type="text"], input[type="date"], select, input[type="number"], input[type="submit"] {
-    display: block;
-    margin: 10px 0;
-    width: 100%; /* Full width */
-}
+        .form-control-sm {
+            height: calc(1.5em + .5rem + 2px);
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
 
-input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+        label, input[type="text"], input[type="date"], select, input[type="number"], input[type="submit"] {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-/* Additional styles */
-select, input[type="text"], input[type="date"], input[type="number"] {
-    padding: 5px;
-    margin-bottom: 2px;
-    box-sizing: border-box;
-}
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
 
-table {
-    width: 80%;
-    border-collapse: collapse;
-    margin-bottom: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    background:white;
-}
+        select, input[type="text"], input[type="date"], input[type="number"] {
+            padding: 5px;
+            margin-bottom: 2px;
+            box-sizing: border-box;
+        }
 
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            margin-left: auto;
+            margin-right: auto;
+            background: white;
+        }
 
-th,  h2 {
-    border: 1px solid #ddd;
-    padding: 4px;
-    text-align: center;
-    color: white;
-}
-td, h2 {
-    border: 2px solid black;
-    padding: 4px;
-    text-align: center;
-    color: black;
-}
+        th, h2 {
+            border: 1px solid #ddd;
+            padding: 4px;
+            text-align: center;
+            color: white;
+        }
 
-th {
-    background-color: green;
-}
+        td, h2 {
+            border: 2px solid black;
+            padding: 4px;
+            text-align: center;
+            color: black;
+        }
 
-.table-container {
+        th {
+            background-color: green;
+        }
+
+        .table-container {
             max-height: 400px;
             overflow-y: auto;
         }
+
         .fixed-header-table thead {
             position: sticky;
             top: 0;
             background-color: #f2f2f2;
         }
-body{
-    background-color: #800000;
-}
+
+        body {
+            background-color: #800000;
+        }
     </style>
 </head>
 <body>
-<h1 style=color:white;text-align:center;font-style:bold;>Count</h1> 
-<a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 200px;">
-    <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="entry.php">Home</a>
+    <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+
+<!-- Add this button to open the sidenav -->
+<span style="color: white; font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+<h1 style="color:white;text-align:center;font-style:bold;">Count</h1>
+<a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 150px;">
+    <!-- <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back -->
 </a>
 
 <form method="post">
@@ -130,9 +183,12 @@ $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : date('Y-m-d');
 
 // Filter entries based on the date range
 $sql = "SELECT 
-agent, 
+agent, barangay,
 COUNT(*) AS entry_count, 
 entry_date,
+-- SUM(CASE WHEN field_probs = 'Yes' THEN 1 ELSE 0 END) AS probs_yes_count,
+-- SUM(CASE WHEN field_probs = 'No' THEN 1 ELSE 0 END) AS probs_no_count,
+
 SUM(CASE WHEN pldt_existing = 'Yes' THEN 1 ELSE 0 END) AS pldt_yes_count,
 SUM(CASE WHEN pldt_existing = 'No' THEN 1 ELSE 0 END) AS pldt_no_count,
 SUM(CASE WHEN globe_existing = 'Yes' THEN 1 ELSE 0 END) AS globe_yes_count,
@@ -140,9 +196,9 @@ SUM(CASE WHEN globe_existing = 'No' THEN 1 ELSE 0 END) AS globe_no_count,
 SUM(CASE WHEN converge_existing = 'Yes' THEN 1 ELSE 0 END) AS converge_yes_count,
 SUM(CASE WHEN converge_existing = 'No' THEN 1 ELSE 0 END) AS converge_no_count,
 SUM(CASE WHEN no_providers_existing = 'Yes' THEN 1 ELSE 0 END) AS no_providers_yes_count,
-SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count,
-SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
-SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count
+SUM(CASE WHEN no_providers_existing = 'No' THEN 1 ELSE 0 END) AS no_providers_no_count
+-- SUM(CASE WHEN unengaged_existing = 'Yes' THEN 1 ELSE 0 END) AS unengaged_yes_count,
+-- SUM(CASE WHEN unengaged_existing = 'No' THEN 1 ELSE 0 END) AS unengaged_no_count
 FROM slip_entry 
 WHERE entry_date BETWEEN '$date_from' AND '$date_to'
 GROUP BY agent";
@@ -172,12 +228,12 @@ if ($result && $result->num_rows > 0) {
     // echo "<th rowspan='6'>LOCK IN</th>";
     
     // Remaining headers 
-    echo "<th colspan='3'>IF NOT SIGNING-UP TO PLDT- WHY?</th>";
+    // echo "<th colspan='2'>IF NOT SIGNING-UP TO PLDT- WHY?</th>";
     echo "<th colspan='2'>PLDT Existing</th>";
     echo "<th colspan='2'>Globe Existing</th>";
     echo "<th colspan='2'>Converge Existing</th>";
-    echo "<th colspan='2'>No Providers Existing</th>";
-    echo "<th colspan='2'>Unengaged Existing</th>";
+    echo "<th colspan='2'>No Providers</th>";
+    // echo "<th colspan='2'>Unengaged Existing</th>";
     echo "</tr>";
         
     // Second row of headers
@@ -190,11 +246,11 @@ if ($result && $result->num_rows > 0) {
     echo "<th>No</th>";
     echo "<th>Yes</th>";
     echo "<th>No</th>";
-    echo "<th>Yes</th>";
-    echo "<th>No</th>";
-    echo "<th>Yes</th>";
-    echo "<th>No</th>";
-    echo "<th>Yes</th>";
+    // echo "<th>Yes</th>";
+    // echo "<th>No</th>";
+    // echo "<th>Yes</th>";
+    // echo "<th>No</th>";
+    // echo "<th>Yes</th>";
     echo "</tr></thead>";
         
     echo "<tbody>";
@@ -206,6 +262,9 @@ if ($result && $result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($row["entry_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["entry_date"]) . "</td>";
         // Display the rest of the columns
+        // echo "<td>" . htmlspecialchars($row["probs_yes_count"]) . "</td>";
+        // echo "<td>" . htmlspecialchars($row["probs_no_count"]) . "</td>";
+
         echo "<td>" . htmlspecialchars($row["pldt_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["pldt_no_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["globe_yes_count"]) . "</td>";
@@ -214,8 +273,8 @@ if ($result && $result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($row["converge_no_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["no_providers_yes_count"]) . "</td>";
         echo "<td>" . htmlspecialchars($row["no_providers_no_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["unengaged_yes_count"]) . "</td>";
-        echo "<td>" . htmlspecialchars($row["unengaged_no_count"]) . "</td>";
+        // echo "<td>" . htmlspecialchars($row["unegagedn_yes_count"]) . "</td>";
+        // echo "<td>" . htmlspecialchars($row["unengaged_no_count"]) . "</td>";
         echo "</tr>";
     }
     echo "</tbody>";
@@ -228,5 +287,16 @@ $conn->close();
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "150px";
+        document.getElementById("main").style.marginLeft = "150px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+</script>
 </body>
 </html>

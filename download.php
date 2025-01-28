@@ -162,6 +162,7 @@
    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>AGENT</th>
     <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LATITUDE</th>
   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>LONGITUDE</th>
+  <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>IMAGE</th>
    <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT</th>
     <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT SALES NEW</th>
   <th style='background-color: #f2f2f2; border: 1px solid #ddd; padding: 4px; text-align: center;'>EXISTING PLDT SALES SWITCH</th>
@@ -217,7 +218,15 @@
               }
             
         
-            
+            // Handle file upload
+            $nap_target_file = '';
+            if (isset($_FILES['nap']) && $_FILES['nap']['error'] == UPLOAD_ERR_OK) {
+              $nap_target_dir = "uploads/";
+              $nap_target_file = $nap_target_dir . basename($_FILES["nap"]["name"]);
+              move_uploaded_file($_FILES["nap"]["tmp_name"], $nap_target_file);
+            }
+
+            // Display image in the table
 
             // Select query
             $sql = "SELECT * FROM slip_entry ORDER BY id DESC";
@@ -244,10 +253,11 @@
                     echo "<td>" . htmlspecialchars($row["province"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["lcp"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["contact_number"]) . "</td>";
-                    echo "<td>" . htmlspecialchars($row["nap"]) . "</td>";
+                    echo "<td><img src='" . htmlspecialchars($row["nap"]) . "' alt='NAP Image' style='width:100px;height:auto;'></td>";
                     echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["latitude"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["longitude"]) . "</td>";
+                    echo "<td><img src='" . htmlspecialchars($row["image"]) . "' alt='Image' style='width:100px;height:auto;'></td>";
                     echo "<td>" . htmlspecialchars($row["pldt_existing"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["pldt_sales_new"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["pldt_sales_switch"]) . "</td>";
@@ -436,10 +446,11 @@ function generateTable() {
           cell6.textContent = entry.province;
           cell7.textContent = entry.lcp;
           cell8.textContent = entry.entry_date;
-          cell9.textContent = entry.contact_number;
-          cell10.textContent = entry.nap;
+            cell9.innerHTML = entry.nap ? `<img src="uploads/${entry.nap}" alt="NAP Image" style="width:100px;height:auto;">` : '';
+            cell10.innerHTML = entry.nap ? `<img src="uploads/${entry.nap}" alt="NAP Image" style="width:100px;height:auto;">` : ''; 
           cell11.textContent = entry.longitude;
           cell12.textContent = entry.latitude;
+            cell12.innerHTML = entry.image ? `<a href="uploads/${entry.image}" target="_blank">View Image</a>` : '';
           cell13.textContent = entry.pldt_existing;
           cell14.textContent = entry.pldt_sales_new;
           cell15.textContent = entry.pldt_sales_switch;
@@ -462,7 +473,12 @@ function exportToExcel() {
   const rows = Array.from(table.querySelectorAll('tr'));
 
   // Create tab-separated values string
-  const data = rows.map(row => Array.from(row.querySelectorAll('th, td')).map(cell => cell.textContent).join('\t')).join('\n');
+  const data = rows.map(row => Array.from(row.querySelectorAll('th, td')).map(cell => {
+    if (cell.querySelector('img')) {
+      return `=HYPERLINK("${cell.querySelector('img').src}", "click here to show image")`; // Use image URL with hyperlink
+    }
+    return cell.textContent;
+  }).join('\t')).join('\n');
 
   // Create Blob object
   const blob = new Blob([data], { type: 'text/plain' });

@@ -145,7 +145,6 @@ th, td {
         $province = $_POST['province'];
         $lcp = $_POST['lcp'];
         $contact_number = $_POST['contact_number'];
-        $nap = $_POST['nap'];
         $others_not_signing_up = $_POST['others_not_signing_up'];
         $pldt_existing = $_POST["pldt_existing"];
         $pldt_lock_date = $_POST["pldt_lock_date"];
@@ -159,9 +158,6 @@ th, td {
         $lock_date = $_POST["lock_date"];
         $converge_sales_new = $_POST["converge_sales_new"];
         $converge_sales_switch = $_POST["converge_sales_switch"];
-        $unengaged_existing = $_POST["unengaged_existing"];
-        $unengaged_sales_new = $_POST["unengaged_sales_new"];
-        $unengaged_sales_switch = $_POST["unengaged_sales_switch"];
         $other_prov = $_POST["other_prov"];
         $other_lock_date = $_POST["other_lock_date"];
         $other_sales_new = $_POST["other_sales_new"];
@@ -170,15 +166,21 @@ th, td {
         $field_probs = $_POST["field_probs"];
         $others_not_signing_up = $_POST["others_not_signing_up"];
 
-
+        // Handle file upload
+        if (isset($_FILES['nap']) && $_FILES['nap']['error'] == UPLOAD_ERR_OK) {
+            $nap_target_dir = "uploads/";
+            $nap_target_file = $nap_target_dir . basename($_FILES["nap"]["name"]);
+            move_uploaded_file($_FILES["nap"]["tmp_name"], $nap_target_file);
+        } else {
+            $nap_target_file = $row['nap']; // Keep the existing file if no new file is uploaded
+        }
 
         // Prepare and bind the SQL statement
         $update_sql = "UPDATE slip_entry SET name=?, zone=?, barangay=?, entry_date=?, city=?, province=?, lcp=?, contact_number=?, nap=?, others_not_signing_up=?, pldt_existing=?, pldt_lock_date=?, pldt_sales_new=?, pldt_sales_switch=?, globe_existing=?, globe_lock_date=?, globe_sales_new=?, globe_sales_switch=?, converge_existing=?, lock_date=?, converge_sales_new=?, converge_sales_switch=?, other_prov=?, other_lock_date=?, other_sales_new=?, other_sales_switch=?, no_providers_existing=?, unengaged_existing=?, field_probs=? WHERE id=?";
 
         $stmt = $conn->prepare($update_sql);
-        $stmt->bind_param("sssssssssssssssssssssssssssssi", $name, $zone, $barangay, $entry_date, $city, $province, $lcp, $contact_number, $nap, $others_not_signing_up, $pldt_existing, $pldt_lock_date, $pldt_sales_new, $pldt_sales_switch, $globe_existing, $globe_lock_date, $globe_sales_new, $globe_sales_switch, $converge_existing, $lock_date, $converge_sales_new, $converge_sales_switch, $other_prov, $other_lock_date, $other_sales_new, $other_sales_switch, $no_providers_existing, $unengaged_existing, $field_probs, $id);
+        $stmt->bind_param("sssssssssssssssssssssssssssssi", $name, $zone, $barangay, $entry_date, $city, $province, $lcp, $contact_number, $nap_target_file, $others_not_signing_up, $pldt_existing, $pldt_lock_date, $pldt_sales_new, $pldt_sales_switch, $globe_existing, $globe_lock_date, $globe_sales_new, $globe_sales_switch, $converge_existing, $lock_date, $converge_sales_new, $converge_sales_switch, $other_prov, $other_lock_date, $other_sales_new, $other_sales_switch, $no_providers_existing, $unengaged_existing, $field_probs, $id);
 
-        
         $stmt->execute();
 
         // Redirect after updating the entry
@@ -189,7 +191,7 @@ th, td {
     $conn->close();
     ?>
 
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
     <div class="container">
         <!-- Display the form with input fields pre-filled with entry details -->
         <label for="name">Name:</label>
@@ -210,14 +212,14 @@ th, td {
         <label for="province">Province:</label>
         <input type="text" name="province" id="province" value="<?php echo $row['province']; ?>" oninput="this.value = this.value.toUpperCase()">
 
-        <label for="lcp">Lcp:</label>
-        <input type="text" name="lcp" id="lcp" value="<?php echo $row['lcp']; ?>" oninput="this.value = this.value.toUpperCase()">
+        <label for="lcp" style="display:none;">Lcp:</label>
+        <input type="text" name="lcp" id="lcp" value="<?php echo $row['lcp']; ?>" oninput="this.value = this.value.toUpperCase()" style="display:none;">
 
         <label for="contact_number">Contact Number:</label>
         <input type="text" name="contact_number" id="contact_number" value="<?php echo $row['contact_number']; ?>">
         
         <label for="nap">Nap:</label>
-        <input type="text" name="nap" id="nap" value="<?php echo $row['nap']; ?>" oninput="this.value = this.value.toUpperCase()">
+        <input type="file" name="nap" id="nap">
        
         <br>
             <table>
@@ -234,6 +236,7 @@ th, td {
                 
                          
                 <select name="pldt_existing">
+                <option value=""></option>
     <option value="No"<?php if ($row['pldt_existing'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['pldt_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -245,6 +248,7 @@ th, td {
             <td>
                 
                 <select name="pldt_sales_new">
+                <option value=""></option>
     <option value="No"<?php if ($row['pldt_sales_new'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['pldt_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -254,6 +258,7 @@ th, td {
             <td>GLOBE:</td>
             <td>
             <select name="globe_existing">
+            <option value=""></option>
     <option value="No"<?php if ($row['globe_existing'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['globe_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -265,6 +270,7 @@ th, td {
             <td>
                 
                 <select name="globe_sales_new">
+                <option value=""></option>
     <option value="No"<?php if ($row['globe_sales_new'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['globe_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -272,6 +278,7 @@ th, td {
             <td>
                 
                 <select name="globe_sales_switch">
+                <option value=""></option>
     <option value="No"<?php if ($row['globe_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['globe_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -283,6 +290,7 @@ th, td {
             <td>
                
                 <select name="converge_existing">
+                <option value=""></option>
     <option value="No"<?php if ($row['converge_existing'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['converge_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -296,6 +304,7 @@ th, td {
                    
                     
                 <select name="converge_sales_new">
+                <option value=""></option>
     <option value="No"<?php if ($row['converge_sales_new'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['converge_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -304,6 +313,7 @@ th, td {
                 
                    
                 <select name="converge_sales_switch">
+                <option value=""></option>
     <option value="No"<?php if ($row['converge_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['converge_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -321,6 +331,7 @@ th, td {
 
         <td>                  
                 <select name="other_sales_new">
+                <option value=""></option>
     <option value="No"<?php if ($row['other_sales_new'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['other_sales_new'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -328,6 +339,7 @@ th, td {
 
 <td>                  
                 <select name="other_sales_switch">
+                <option value=""></option>
     <option value="No"<?php if ($row['other_sales_switch'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['other_sales_switch'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -340,6 +352,7 @@ th, td {
                
                    
                 <select name="no_providers_existing">
+                <option value=""></option>
     <option value="No"<?php if ($row['no_providers_existing'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['no_providers_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -350,6 +363,7 @@ th, td {
             <td>UNENGAGED:</td>
             <td>
             <select name="unengaged_existing">
+            <option value=""></option>
     <option value="No"<?php if ($row['unengaged_existing'] == 'No') echo ' selected'; ?>>No</option>
     <option value="Yes"<?php if ($row['unengaged_existing'] == 'Yes') echo ' selected'; ?>>Yes</option>
 </select>
@@ -369,6 +383,7 @@ th, td {
             <td>
            
                 <select name="field_probs">
+                <option value=""<?php if ($row['field_probs'] == '') echo ' selected'; ?>></option>
                 <option value="LOCKED IN"<?php if ($row['field_probs'] == 'LOCKED IN') echo ' selected'; ?>>LOCKED IN</option>
                    <option value="PRICE"<?php if ($row['field_probs'] == 'PRICE') echo ' selected'; ?>>PRICE</option>
                    <option value="SATISFIED"<?php if ($row['field_probs'] == 'SATISFIED') echo ' selected'; ?>>SATISFIED</option>
@@ -381,8 +396,6 @@ th, td {
             <input type="text" id="others_not_signing_up" name="others_not_signing_up" value="<?php echo $row['others_not_signing_up']; ?>"oninput="this.value = this.value.toUpperCase()">
           
        
-
-           
     
   
     <!-- <label for="other provider">OTHER PROVIDER</label>

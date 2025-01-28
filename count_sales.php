@@ -21,6 +21,52 @@
             margin-top: 20px;
         }
 
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #a8e4a0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #800000;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: black;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidenav .logout {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+        /* Style for logout link */
+.sidenav .logout {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+}
+
         form {
     width: 40%;
     margin: 0 auto;
@@ -101,9 +147,18 @@ body{
     </style>
 </head>
 <body>
-<h1 style=color:white;text-align:center;font-style:bold;>Count Sales</h1> 
-<a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 200px;">
-    <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back
+<div id="countnav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="entry.php">Home</a>
+    <a href="index.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+
+<!-- Add this button to open the sidenav -->
+<span style="color: white; font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+<h1 style="color:white;text-align:center;font-style:bold;">Count</h1>
+<a href="entry.php" class="back-button" onclick="history.back()" style="color: white; float: left; margin-left: 150px;">
+    <!-- <i class="fas fa-arrow-alt-circle-left" style="color: white;"></i> Back -->
 </a>
 
 <form method="post">
@@ -218,7 +273,16 @@ if ($result && $result->num_rows > 0) {
 // Closing braces for PHP code
 $conn->close();
 ?>
+<!-- side nav script -->
+<script>
+function openNav() {
+    document.getElementById("countnav").style.width = "250px";
+}
 
+function closeNav() {
+    document.getElementById("countnav").style.width = "0";
+}
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

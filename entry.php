@@ -235,9 +235,9 @@ $conn->close();
 <div class="sidenav">
 <a href="user_table.php" class="agent"><i class="fas fa-user-alt"></i>Agent</a>
  <a href="count.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Agent Entry</a>
- <a href="count_existing.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Existing</a>
- <a href="count_sales.php" class="agentEntry"><i class="fas fa-chart-bar"></i>New Sales</a>
- <a href="count_switch.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Sales Switch</a>
+ <a href="summary.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Summary</a>
+ <!-- <a href="count_sales.php" class="agentEntry"><i class="fas fa-chart-bar"></i>New Sales</a>
+ <a href="count_switch.php" class="agentEntry"><i class="fas fa-chart-bar"></i>Sales Switch</a> --> 
  <!-- <a href="" class="agentEntry"><i class="fas fa-chart-bar"></i>Field Problem</a> -->
  <a href="download.php" class="agentEntry"><i class="fas fa-file-export"></i>Export Excel</a>
 
@@ -324,7 +324,7 @@ $conn->close();
                     echo "<td>" . htmlspecialchars($row["province"]) . "</td>";
                     // echo "<td>" . htmlspecialchars($row["lcp"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["contact_number"]) . "</td>";
-                    // echo "<td>" . htmlspecialchars($row["nap"]) . "</td>";
+                    // echo "<td>" . htmlspecialchars($row["image"]) . "</td>";
                     echo "<td>" . htmlspecialchars($row["agent"]) . "</td>";
                     // echo "<td><button onclick='editEntry(" . $row['id'] . ")'>Edit</button></td>";
                     echo "</tr>";
